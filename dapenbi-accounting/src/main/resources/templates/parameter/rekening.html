@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
+<head>
+    <title>Parameter Rekening</title>
+    <meta layout:fragment="custom-style">
+    <link rel="stylesheet" th:href="@{/metronic/plugins/custom/datatables/datatables.bundle.css}"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/css/jqx.base.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/styles/jqx.light.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/css/img.css}"/>
+    <link rel="stylesheet" th:href="@{/vendors/pace-1.0.2/themes/purple/pace-theme-flat-top.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/custom_css/parameter/rekening.css}">
+    </meta>
+    <style>
+        table.dataTable tbody > tr td {
+            cursor: pointer;
+        }
+
+        .input-group-text {
+            height: 28px;
+        }
+
+        .table-empty {
+            background-color: #f0f0f0;
+        }
+
+        button.align-bottom {
+            position: absolute;
+            bottom: 0;
+        }
+
+        .textCurrency {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+<section layout:fragment="custom-content">
+    <!-- PAGE/PACE LOADER-->
+    <div class="pace-loader"></div>
+
+    <div
+            class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+        <!--begin::Portlet-->
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">Paramater Rekening</h3>
+                </div>
+            </div>
+            <div class="kt-form">
+                <div class="kt-portlet__body">
+                    <div class="row no-gutters pb-3">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" disabled class="btn btn-sm btn-primary" id="btnAddRekening">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                            <button type="button" id="addRekeningRoot" class="btn btn-secondary">Root
+                            </button>
+                            <button type="button" id="addRekeningBranch" class="btn btn-secondary">Branch
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row no-gutters pb-3">
+                        <div class="col-12 col-sm-6 col-md-8">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" id="expandAllBtn" class="btn btn-secondary">Expands all rows
+                                </button>
+                                <button type="button" id="collapseAllBtn" class="btn btn-secondary">Collapse all rows
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 text-right">
+                            <div class="form-check form-check-inline">
+                                Level
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                       value="1" onchange="levelOptionsPressed(value)">
+                                <label class="form-check-label" for="inlineRadio1">1</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                                       value="2" onchange="levelOptionsPressed(value)">
+                                <label class="form-check-label" for="inlineRadio2">2</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
+                                       value="3" onchange="levelOptionsPressed(value)">
+                                <label class="form-check-label" for="inlineRadio3">3</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4"
+                                       value="4" onchange="levelOptionsPressed(value)">
+                                <label class="form-check-label" for="inlineRadio4">4</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5"
+                                       value="5" onchange="levelOptionsPressed(value)">
+                                <label class="form-check-label" for="inlineRadio5">5</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio6"
+                                       checked="checked" value="6" onchange="levelOptionsPressed(value)">
+                                <label class="form-check-label" for="inlineRadio5">6</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="treeGrid" style="width: 100%">
+                            </div>
+                            <p class="pt-2"><sup>*</sup> Double-click the row to edit data.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--NEW DIALOG-->
+    <div class="modal fade" id="formRekeningDialog" tabindex="-1" role="dialog"
+         aria-labelledby="parameterFormDialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+            <form id="formRekening">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Form Rekening</h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="kt-form kt-form--fit">
+                            <div class="form-group kt-form__group row form-parent">
+                                <div class="col-3"><label class="col-form-label">Parent</label></div>
+                                <div class="col-1 pr-0" style="width:content-box">
+                                    <label class="col-form-label">ID</label></div>
+                                <div class="col-2 pl-0">
+                                    <input type="text" readonly id="txtParent" class="form-control kt-input"/>
+                                </div>
+                                <div class="col-1 pr-0" name="kodeRekParent" style="width:content-box">
+                                    <label class="col-form-label">Kode</label>
+                                </div>
+                                <div class="col-3 pl-0" name="kodeRekParent">
+                                    <input type="text" readonly id="txtKodeRekeningParent"
+                                           class="form-control kt-input"/>
+                                </div>
+                            </div>
+                            <div class="form-group kt-form__group row" hidden="true">
+                                <label class="col-3 col-form-label">Id Rekening</label>
+                                <div class="col-4">
+                                    <input type="text" placeholder="Id Rekening" id="txtIdRekening"
+                                           class="form-control kt-input"/>
+                                </div>
+                            </div>
+                            <div class="form-group kt-form__group row">
+                                <label class="col-3 col-form-label">Kode Rekening<sup style="color: red">*</sup></label>
+                                <div class="col-4">
+                                    <input type="number" placeholder="Kode Rekening" id="txtKodeRekening"
+                                           class="form-control kt-input"/>
+                                </div>
+                            </div>
+                            <div class="form-group kt-form__group row">
+                                <label class="col-3 col-form-label">Summary<sup style="color: red">*</sup></label>
+                                <div class="col-8">
+                                    <select class="form-control pt-0 pb-0 kt-input custom-select" id="txtIsSummary">
+                                        <option value="" disabled selected>Select your option</option>
+                                        <option value="Y">Ya</option>
+                                        <option value="N">Tidak</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group kt-form__group row">
+                                <label class="col-3 col-form-label">Level<sup style="color: red">*</sup></label>
+                                <div class="col-2">
+                                    <input type="number" readonly min="1" max="6" id="txtLevelRekening"
+                                           class="form-control kt-input"/>
+                                </div>
+                            </div>
+                            <div class="form-group kt-form__group row">
+                                <label class="col-3 col-form-label">Nama Rekening<sup style="color: red">*</sup></label>
+                                <div class="col-8">
+                                    <input type="text" placeholder="Nama Rekening" id="txtNamaRekening"
+                                           class="form-control kt-input"/>
+                                </div>
+                            </div>
+                            <div class="form-group kt-form__group row">
+                                <label class="col-3 col-form-label">Saldo Normal<sup style="color: red">*</sup></label>
+                                <div class="col-8">
+                                    <select class="form-control pt-0 pb-0 kt-input custom-select" id="txtSaldoNormal">
+                                        <option value="" disabled selected>Select your option</option>
+                                        <option value="D">D -> Debit</option>
+                                        <option value="K">K -> Kredit</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group kt-form__group row">
+                                <label class="col-3 col-form-label">Status Neraca<sup style="color: red">*</sup></label>
+                                <div class="col-8">
+                                    <select class="form-control pt-0 pb-0 kt-input custom-select"
+                                            id="txtStatusNeracaAnggaran">
+                                        <option value="" disabled selected>Select your option</option>
+                                        <option value="N">N -> Neraca</option>
+                                        <option value="A">A -> Anggaran</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group kt-form__group row">
+                                <label class="col-3 col-form-label">Tipe Rekening<sup style="color: red">*</sup></label>
+                                <div class="col-8">
+                                    <select class="form-control pt-0 pb-0 kt-input custom-select"
+                                            id="txtTipeRekening">
+                                        <option value="" disabled selected>Select your option</option>
+                                        <option th:each="tipeRekening : ${listTipeRekening}" th:value="${tipeRekening.kodeLookup}" th:text="${tipeRekening.namaLookup}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group kt-form__group row">
+                                <label class="col-3 col-form-label">Status Aktif</label>
+                                <div class="col-lg-2 col-md-4 col-sm-8 pt-2">
+                                    <input type="radio" id="statusAktifYa" name="txtStatusAktif" value="1">
+                                    <label for="statusAktifYa">&nbsp;Ya</label><br>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-8 pt-2">
+                                    <input type="radio" id="statusAktifTidak" name="txtStatusAktif" value="0">
+                                    <label for="statusAktifTidak">&nbsp;Tidak</label><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-simpan"
+                                id="simpanRekening">Simpan
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--NEW DIALOG-->
+
+</section>
+
+<section layout:fragment="custom-script">
+    <script>
+        /*<![CDATA[*/
+
+        var flagRead = [[${flagRead}]];
+        var flagEdit = [[${flagEdit}]];
+        var flagDelete = [[${flagDelete}]];
+
+        /*]]>*/
+    </script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jquery-1.11.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqx-all.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/format.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/demofunctions.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqxcore.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqxdata.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqxlistbox.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqxdropdownlist.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqxtabs.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqxmenu.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqxbuttons.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqxscrollbar.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqxdatatable.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqxtreegrid.js}"></script>
+    <script th:src="@{/vendors/pace-1.0.2/pace.js}" type="text/javascript"></script>
+    <script type="text/javascript" th:src="@{/js/parameter/rekening.js}"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $('#txtKodeRekening').focusout(function () {
+            var regexp = /^[0-9]+$/;
+            if (regexp.test($('#txtKodeRekening').val())) {
+                $('#txtKodeRekening').removeClass('is-invalid');
+                $('#txtKodeRekening').addClass('is-valid');
+            } else {
+                $('#txtKodeRekening').addClass('is-invalid');
+            }
+        });
+
+        $('#txtKodeRekening').keyup(function () {
+            var regexp = /^[0-9]+$/;
+            if (regexp.test($('#txtKodeRekening').val())) {
+                $('#txtKodeRekening').removeClass('is-invalid');
+                $('#txtKodeRekening').addClass('is-valid');
+            } else {
+                $('#txtKodeRekening').addClass('is-invalid');
+            }
+        });
+    </script>
+</section>
+</body>
+</html>

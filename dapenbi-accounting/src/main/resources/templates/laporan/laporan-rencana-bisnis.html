@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
+<head>
+    <title>Laporan Rencana Bisnis</title>
+    <meta layout:fragment="custom-style">
+    <link rel="stylesheet" th:href="@{/metronic/plugins/custom/datatables/datatables.bundle.css}"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/css/jqx.base.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/styles/jqx.light.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/css/img.css}"/>
+    <link rel="stylesheet" th:href="@{/vendors/pace-1.0.2/themes/purple/pace-theme-flat-top.css}"/>
+    </meta>
+    <style>
+        .form-body-row {
+            margin: 0px !important;
+            margin-bottom: 5px !important;
+            height: 29px;
+        }
+
+        .form-body-label {
+            text-align: right;
+            padding-right: 5px;
+        }
+
+        .modal-footer {
+            text-align: center;
+        }
+
+        .dropdown-toggle {
+            border-color: #ced4da !important;
+        }
+
+        #tblLaporan_processing {
+            margin-top: 20px;
+        }
+
+        div.dataTables_wrapper div.dataTables_processing {
+            top: 40%;
+        }
+
+        .pdfobject-container {
+            height: 90vh;
+            width: 100%;
+            border: 1rem solid rgba(0,0,0,.1);
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="custom-content">
+    <div class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+        <!--begin::Portlet-->
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">Laporan Rencana Bisnis</h3>
+                </div>
+            </div>
+            <div class="kt-form">
+                <div class="kt-portlet__body">
+                    <div class="row pb-3" style="margin: 0">
+                        <div class="col-custom" style="margin-right: 20px">
+                            <div class="row form-body-row">
+                                <div class="form-body-label text-left" style="width: 100px !important">
+                                    <label class="col-form-label">Nama Laporan:</label>
+                                </div>
+                                <div class="form-body-input" width="">
+                                    <select class="selectpicker" id="idLaporan" onchange="refreshTable()">
+                                        <option th:each="laporan : ${listLaporan}" th:value="${laporan.idLaporanHdr}" th:text="${laporan.namaLaporan}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-custom" style="margin-right: 20px">
+                            <div class="row form-body-row">
+                                <div class="form-body-label text-left" style="width: 80px !important">
+                                    <label class="col-form-label">Tahun Buku:</label>
+                                </div>
+                                <div class="form-body-input">
+                                    <select class="selectpicker" id="idTahunBuku" onchange="refreshTable()">
+                                        <option th:each="tahunBuku : ${listTahunBuku}" th:value="${tahunBuku.kodeTahunBuku}" th:text="${tahunBuku.namaTahunBuku}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pb-3" style="margin: 0">
+                        <div class="col-custom" style="margin-right: 20px">
+                            <div class="row form-body-row">
+                                <div class="form-body-label text-left" style="width: 100px !important">
+                                    <label class="col-form-label">Periode:</label>
+                                </div>
+                                <div class="form-body-input" width="">
+                                    <select class="selectpicker" id="idPeriode" onchange="refreshTable()">
+                                        <option th:each="periode : ${listPeriode}" th:value="${periode.kodePeriode}" th:text="${periode.namaPeriode}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-custom" style="margin-right: 20px">
+                            <div class="row form-body-row">
+                                <div class="form-body-label text-left" style="width: 80px !important">
+                                    <label class="col-form-label">DRI:</label>
+                                </div>
+                                <div class="form-body-input" width="">
+                                    <select class="selectpicker" id="idDRI" onchange="refreshTable()">
+                                        <option value="1">DRI Sebelum Pajak</option>
+                                        <option value="3">DRI Final</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 text-right">
+                            <button type="button" class="btn btn-danger" id="export-pdf" disabled>PDF</button>
+                            <button type="button" class="btn btn-success" id="export-excel" disabled>Excel</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered table-striped dataTable" id="tblLaporan"
+                                   width="100%"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--PDF DIALOG-->
+    <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog"
+         aria-labelledby="parameterFormDialog" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <form>
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div id="example1"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--PDF DIALOG-->
+</section>
+<section layout:fragment="custom-script">
+    <script th:src="@{/metronic/plugins/custom/datatables/datatables.bundle.js}" type="text/javascript"></script>
+    <script th:src="@{/vendors/pace-1.0.2/pace.js}" type="text/javascript"></script>
+    <script th:inline="javascript" type="text/javascript">
+        var pengaturanSistem = /*[[${pengaturanSistem}]]*/ '';
+    </script>
+    <script th:src="@{/js/laporan/laporan-rencana-bisnis.js}"
+            type="text/javascript">
+    </script>
+</section>
+</body>
+</html>

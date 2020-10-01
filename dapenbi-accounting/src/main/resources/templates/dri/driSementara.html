@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
+<head>
+    <title>DRI Sementara</title>
+    <meta layout:fragment="custom-style">
+    <link rel="stylesheet" th:href="@{/metronic/plugins/custom/datatables/datatables.bundle.css}"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/css/jqx.base.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/styles/jqx.light.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/css/img.css}"/>
+    <link rel="stylesheet" th:href="@{/vendors/pace-1.0.2/themes/purple/pace-theme-flat-top.css}"/>
+    </meta>
+    <style>
+        .form-body-row {
+            margin: 0px !important;
+            margin-bottom: 5px !important;
+            height: 29px;
+        }
+
+        .form-body-label {
+            width: 50%;
+            text-align: right;
+            padding-right: 5px;
+        }
+
+        .form-body-input {
+            width: 50%;
+        }
+
+        .modal-footer {
+            text-align: center;
+        }
+
+        .dropdown-toggle {
+            border-color: #ced4da !important;
+        }
+
+        #tblPeriode_processing {
+            margin-top: 20px;
+        }
+
+        div.dataTables_wrapper div.dataTables_processing {
+            top: 40%;
+        }
+
+        .pdfobject-container {
+            height: 90vh;
+            width: 100%;
+            border: 1rem solid rgba(0,0,0,.1);
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="custom-content">
+    <div class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+        <!--begin::Portlet-->
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">DRI Sementara</h3>
+                </div>
+            </div>
+            <div class="kt-form">
+                <div class="kt-portlet__body">
+                    <div class="row pb-3">
+                        <div class="col-custom text-right" style="padding: 0px 10px 0px 10px">
+                            <div class="row">
+                                <div class="col-custom" style="padding: 0px 10px 0px 10px">
+                                    <label class="col-form-label">Rekening</label>
+                                </div>
+                                <div class="col-custom" style="padding: 0px 10px 0px 10px; width: 300px">
+                                    <select onchange="refreshTable()" class="form-control selectpicker" id="idRekening" data-live-search="true">
+                                        <option value="">All</option>
+                                        <option th:each="rekening : ${listRekening}" th:value="${rekening.kodeRekening}" th:text="${rekening.kodeRekening} + ' - ' + ${rekening.namaRekening}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-custom" style="padding: 0px 10px 0px 10px; margin-left: 10px">
+                            <div class="row">
+                                <div class="col-custom" style="padding: 0px 10px 0px 10px">
+                                    <label class="col-form-label">Penanda Tangan</label>
+                                </div>
+                                <div>
+                                    <input type="text" class="form-control" id="ttd">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col text-right" hidden>
+                            <div class="row">
+                                <div class="col">
+                                    <label class="col-form-label">Tanggal</label>
+                                </div>
+                                <div class="col">
+                                    <div class='input-group date' id='periodeDatepicker'>
+                                        <input type='text' class="form-control" id="tglPeriode" readonly/>
+                                        <div class="input-group-append">
+                                            <button class="input-group-text" id="" onclick="datePicker()"><i
+                                                    class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 text-right">
+<!--                            <button type="button" class="btn btn-sm btn-primary" id="addButton" data-toggle="modal"-->
+<!--                                    data-target="#add-form" data-backdrop="static" data-keyboard="false">-->
+<!--                                <i class="fa fa-plus"></i><span>&nbsp;Tambah Data</span>-->
+<!--                            </button>-->
+                            <button type="button" class="btn btn-danger" id="export-pdf" disabled>PDF</button>
+                            <button type="button" class="btn btn-success" id="export-excel" disabled>Excel</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered table-striped dataTable" id="tblPeriode"
+                                   width="100%"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="add-form" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Master Periode</h5>
+                    <input id="statusModal" type="text" style="display: none">
+                </div>
+                <div class="modal-body">
+                    <div class="form-body">
+                        <div class="row form-body-row">
+                            <div class="form-body-label">
+                                <label class="col-form-label">Periode:</label>
+                            </div>
+                            <div class="form-body-input">
+                                <input type="text" class="form-control" style="width: 35px" id="periode">
+                            </div>
+                        </div>
+                        <div class="row form-body-row">
+                            <div class="form-body-label">
+                                <label class="col-form-label">Nama Bulan:</label>
+                            </div>
+                            <div class="form-body-input">
+                                <input type="text" class="form-control" id="namaBulan">
+                            </div>
+                        </div>
+                        <div class="row form-body-row">
+                            <div class="form-body-label">
+                                <label class="col-form-label">Triwulan:</label>
+                            </div>
+                            <div class="form-body-input">
+                                <select class="form-control selectpicker" id="triwulan">
+                                    <option value="">Pilih Triwulan</option>
+                                    <option value="TW1">TW1</option>
+                                    <option value="TW2">TW2</option>
+                                    <option value="TW3">TW3</option>
+                                    <option value="TW4">TW4</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-body-row">
+                            <div class="form-body-label">
+                                <label class="col-form-label">Quarter:</label>
+                            </div>
+                            <div class="form-body-input">
+                                <select class="form-control selectpicker" id="quarter">
+                                    <option value="">Pilih Quarter</option>
+                                    <option value="Q1">Q1</option>
+                                    <option value="Q2">Q2</option>
+                                    <option value="Q3">Q3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-body-row">
+                            <div class="form-body-label">
+                                <label class="col-form-label">Status Aktif:</label>
+                            </div>
+                            <div class="form-body-input col-form-label" id="statusAktif">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" name="statusAktif" type="radio" id="status-aktif-ya"
+                                           value="1">
+                                    <label class="form-check-label" for="status-aktif-ya">Ya</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" name="statusAktif" type="radio"
+                                           id="status-aktif-tidak" value="0">
+                                    <label class="form-check-label" for="status-aktif-tidak">Tidak</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-body-row" hidden>
+                            <div class="form-body-label">
+                                <label class="col-form-label">Created Date:</label>
+                            </div>
+                            <div class="form-body-input">
+                                <input type="text" class="form-control" id="createdDate">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="justify-content: center">
+                    <button type="button" class="btn btn-sm btn-primary" id="savePeriodeButton">Simpan
+                    </button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal"
+                            id="batalButton">Batal
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="detailOk" hidden>OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="delete-form" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Delete this data?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="deleteButton">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--PDF DIALOG-->
+    <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog"
+         aria-labelledby="parameterFormDialog" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <form>
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div id="example1"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--PDF DIALOG-->
+</section>
+<section layout:fragment="custom-script">
+    <script th:src="@{/metronic/plugins/custom/datatables/datatables.bundle.js}" type="text/javascript"></script>
+    <script th:src="@{/vendors/pace-1.0.2/pace.js}" type="text/javascript"></script>
+    <script th:inline="javascript" type="text/javascript">
+        var pengaturanSistem = /*[[${pengaturanSistem}]]*/ '';
+    </script>
+    <script th:src="@{/js/dri/driSementara.js}" type="text/javascript">
+    </script>
+</section>
+</body>
+</html>

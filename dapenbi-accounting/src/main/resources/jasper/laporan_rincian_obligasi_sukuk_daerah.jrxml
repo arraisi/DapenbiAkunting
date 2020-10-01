@@ -1,0 +1,731 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="laporan_rincian_obligasi_sukuk_daerah" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="cd2e91a4-83ce-4414-a168-d6cc3ddbde55">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="periode" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="keterangan" class="java.lang.String">
+		<fieldDescription><![CDATA[keterangan]]></fieldDescription>
+	</field>
+	<field name="peringkatAkhir" class="java.lang.String">
+		<fieldDescription><![CDATA[peringkatAkhir]]></fieldDescription>
+	</field>
+	<field name="updatedBy" class="java.lang.String">
+		<fieldDescription><![CDATA[updatedBy]]></fieldDescription>
+	</field>
+	<field name="nilaiNominal" class="java.lang.Integer">
+		<fieldDescription><![CDATA[nilaiNominal]]></fieldDescription>
+	</field>
+	<field name="updatedDate" class="java.util.Date">
+		<fieldDescription><![CDATA[updatedDate]]></fieldDescription>
+	</field>
+	<field name="persenKupon" class="java.lang.Integer">
+		<fieldDescription><![CDATA[persenKupon]]></fieldDescription>
+	</field>
+	<field name="createdDate" class="java.util.Date">
+		<fieldDescription><![CDATA[createdDate]]></fieldDescription>
+	</field>
+	<field name="namaPenerbit" class="java.lang.String">
+		<fieldDescription><![CDATA[namaPenerbit]]></fieldDescription>
+	</field>
+	<field name="createdBy" class="java.lang.String">
+		<fieldDescription><![CDATA[createdBy]]></fieldDescription>
+	</field>
+	<field name="idLaporan" class="java.lang.Integer">
+		<fieldDescription><![CDATA[idLaporan]]></fieldDescription>
+	</field>
+	<field name="namaObligasi" class="java.lang.String">
+		<fieldDescription><![CDATA[namaObligasi]]></fieldDescription>
+	</field>
+	<field name="tglJatpo" class="java.lang.String">
+		<fieldDescription><![CDATA[tglJatpo]]></fieldDescription>
+	</field>
+	<field name="nilaiSelinv" class="java.lang.Integer">
+		<fieldDescription><![CDATA[nilaiSelinv]]></fieldDescription>
+	</field>
+	<field name="nilaiWajar" class="java.lang.Integer">
+		<fieldDescription><![CDATA[nilaiWajar]]></fieldDescription>
+	</field>
+	<field name="tglPerolehan" class="java.lang.String">
+		<fieldDescription><![CDATA[tglPerolehan]]></fieldDescription>
+	</field>
+	<field name="kodeObligasi" class="java.lang.String">
+		<fieldDescription><![CDATA[kodeObligasi]]></fieldDescription>
+	</field>
+	<field name="peringkatAwal" class="java.lang.String">
+		<fieldDescription><![CDATA[peringkatAwal]]></fieldDescription>
+	</field>
+	<field name="persenSelinv" class="java.lang.Integer">
+		<fieldDescription><![CDATA[persenSelinv]]></fieldDescription>
+	</field>
+	<field name="manfaatLain" class="java.lang.Integer">
+		<fieldDescription><![CDATA[manfaatLain]]></fieldDescription>
+	</field>
+	<field name="sektorEkonomi" class="java.lang.String">
+		<fieldDescription><![CDATA[sektorEkonomi]]></fieldDescription>
+	</field>
+	<field name="tglLaporan" class="java.lang.String">
+		<fieldDescription><![CDATA[tglLaporan]]></fieldDescription>
+	</field>
+	<field name="metodePencatatan" class="java.lang.String">
+		<fieldDescription><![CDATA[metodePencatatan]]></fieldDescription>
+	</field>
+	<field name="nilaiPerolehan" class="java.lang.Integer">
+		<fieldDescription><![CDATA[nilaiPerolehan]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="44" splitType="Stretch">
+			<staticText>
+				<reportElement x="301" y="0" width="200" height="14" uuid="0aa2887d-0a84-4370-a93a-dc1c7bb8591c"/>
+				<textElement textAlignment="Center">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DANA PENSIUN BANK INDONESIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="301" y="14" width="200" height="10" uuid="bfe08052-286a-4475-b1ca-fef0545e9675">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[PROGRAM PENSIUN MANFAAT PASTI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="301" y="24" width="200" height="10" uuid="52ff7840-9c5b-4b35-a51e-ebe04577e160">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[RINCIAN SUKUK]]></text>
+			</staticText>
+			<textField pattern="dd MMM yyyy">
+				<reportElement x="351" y="34" width="100" height="10" uuid="75ad2db7-644c-41b6-b818-ca45a11a66de">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{periode}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="6" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement x="400" y="8" width="20" height="8" uuid="df4ad379-1a62-4717-b55e-20548311ce78">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0f1efcf6-87af-4456-a4f6-d6438ed1a4ce"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[Akhir]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="8" width="45" height="8" uuid="7565d405-0717-4b30-82cb-bcd1f8c59b24">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b8a4b59a-6b6d-4145-831e-d32c5c3c3544"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[Nilai Nominal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="305" y="8" width="25" height="8" uuid="fb9461dc-1380-4995-9bcb-4796d90d6e6c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2d2e79e6-c678-4fa1-9c5c-3a7222d7214a"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[Kupon (%)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="8" width="45" height="8" uuid="c9eaa861-f932-43e8-9725-626b560ecdf2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cf7106b0-b6eb-4865-9b6e-396bbd837574"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[Nama Penerbit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="145" y="8" width="70" height="8" uuid="e9e5a8e3-ca0b-4fc4-b78c-9f4cbc26dd3c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="85f55c41-be0f-462b-b78c-9eda01edc93f"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[Nama Obligasi/Sukuk Daerah]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="8" width="50" height="8" uuid="1b865358-40e6-4291-9839-16e92a591610">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="80ab007a-f605-43ff-b172-88967386204c"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[Tanggal Jatuh Tempo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="510" y="8" width="50" height="8" uuid="a44ad84d-e1e8-4337-814a-038aeda0d119">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2c02de75-1a91-4847-b112-558fd7a43437"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[Nilai]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="465" y="8" width="45" height="8" uuid="1ca4f433-c2f1-4da5-977f-6dd033ac440f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2044ef17-b90a-4785-8e8e-f14a152701eb"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[Nilai Wajar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="215" y="8" width="45" height="8" uuid="7be4ca4c-22ec-4799-93af-ae7f73a327ee">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b251089e-1422-464b-a680-efb161ccfaed"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[Tanggal Perolehan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="75" y="8" width="70" height="8" uuid="a9d69e72-308c-490d-b325-fc3d03f89e84">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1515a75d-8203-47f9-948f-29ab5e642c03"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[Kode Obligasi/Sukuk Daerah]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="8" width="20" height="8" uuid="3756ea62-43ec-4742-bb36-59c32f7dc33a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0ecea152-a53a-4981-a7d6-621f25ed1d99"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[Awal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="560" y="8" width="20" height="8" uuid="4253a591-c715-42aa-9775-4750011e4841">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="62ae8bea-c7f7-4442-9811-81669025f1d6"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="625" y="8" width="70" height="8" uuid="329a23bd-b8f6-4fe0-9932-8ec63c83fe4d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9b6a1bf9-fed0-4a56-abb3-bcddc5c4aa0a"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[Program Pensiun/Manfaat Lain]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="580" y="8" width="45" height="8" uuid="22e189cd-97a2-4f0e-abb0-df3f956256dc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e263b262-50b3-4a5b-b18a-59211de4cd7f"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[Sektor Ekonomi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="695" y="8" width="50" height="8" uuid="1345290c-3941-4202-96e6-cb68e4519138">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a37941c2-fb0e-4008-9efe-3c9b0ee402d4"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[Metode Pencatatan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="8" width="45" height="8" uuid="16e62638-97b0-4f1f-8011-05d492473c2d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="01eda64b-379c-414e-8228-999b15793667"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[Nilai Perolehan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="30" height="8" uuid="7ca61611-39dd-4e2e-9e41-5534e36e9f4a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[Nomor Baris]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="8" width="30" height="8" uuid="0844ece3-644f-43ec-8b97-fd5047ac6b98">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="0" width="40" height="8" uuid="93837ec5-4fbd-46e9-8827-1c856b438e94">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[Peringkat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="510" y="0" width="70" height="8" uuid="fae0cf50-cda3-4da0-ad0e-10a3c4a38bf0">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[Selisih Penilaian Investasi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="8" width="30" height="8" uuid="b4df2b29-2fa3-4d3c-a24e-7b45acd30b14">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="0" width="350" height="8" uuid="e8694a11-408d-4dd5-84b2-b6f323a24289">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="0" width="90" height="8" uuid="cb1bf54c-4b16-44e8-945a-77352cd08b16">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="580" y="0" width="222" height="8" uuid="03568e61-a0b9-4b7e-942a-ae667f60de92">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="745" y="8" width="57" height="8" uuid="ab77ee7b-b0b7-4ba0-91f3-e39a7b26aeca">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d84b78dd-1435-4b67-b28e-24419187e01e"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[keterangan]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="56" splitType="Stretch">
+			<textField>
+				<reportElement x="745" y="0" width="57" height="8" uuid="5256b3d0-0cf2-4339-9d7d-38a56d0d54f0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d84b78dd-1435-4b67-b28e-24419187e01e"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{keterangan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="0" width="20" height="8" uuid="a2c121ba-cbf3-4cb4-afce-3b36b9c5ab67">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0f1efcf6-87af-4456-a4f6-d6438ed1a4ce"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{peringkatAkhir}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="0" width="45" height="8" uuid="9970824d-6db9-4882-ac95-dec261bcc91b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b8a4b59a-6b6d-4145-831e-d32c5c3c3544"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nilaiNominal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="305" y="0" width="25" height="8" uuid="91c8dc3f-72b5-42f2-86c3-c6cd51a6e297">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2d2e79e6-c678-4fa1-9c5c-3a7222d7214a"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{persenKupon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="30" y="0" width="45" height="8" uuid="662b7d59-1ec7-462e-90f5-155fc18de06e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cf7106b0-b6eb-4865-9b6e-396bbd837574"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{namaPenerbit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="145" y="0" width="70" height="8" uuid="e290b5fe-5747-4c4f-ae1a-659eb233474f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="85f55c41-be0f-462b-b78c-9eda01edc93f"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{namaObligasi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="0" width="50" height="8" uuid="fa81c91b-0a7f-4c82-9d3e-37f15dfb67ec">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="80ab007a-f605-43ff-b172-88967386204c"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tglJatpo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="510" y="0" width="50" height="8" uuid="8f822242-49a2-45ed-99cd-347c0773cdfc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2c02de75-1a91-4847-b112-558fd7a43437"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nilaiSelinv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="465" y="0" width="45" height="8" uuid="907b86ca-fbe4-4c85-9215-0ca81b933392">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2044ef17-b90a-4785-8e8e-f14a152701eb"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nilaiWajar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="215" y="0" width="45" height="8" uuid="1ec3b1f2-f523-473e-a906-9ba3e2652cc1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b251089e-1422-464b-a680-efb161ccfaed"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tglPerolehan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="75" y="0" width="70" height="8" uuid="439376ed-8c41-49db-91e7-a7d5cb81674b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1515a75d-8203-47f9-948f-29ab5e642c03"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{kodeObligasi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="0" width="20" height="8" uuid="3a34ebb1-5e51-4d40-88c4-b30fd08c1fae">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0ecea152-a53a-4981-a7d6-621f25ed1d99"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{peringkatAwal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="560" y="0" width="20" height="8" uuid="eab44896-ec1f-4007-8a47-e1640939b16f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="62ae8bea-c7f7-4442-9811-81669025f1d6"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{persenSelinv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="625" y="0" width="70" height="8" uuid="2c67b2fa-c26c-42fd-9c50-c736775a9401">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9b6a1bf9-fed0-4a56-abb3-bcddc5c4aa0a"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{manfaatLain}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="580" y="0" width="45" height="8" uuid="242e2b9d-b3fc-4a9f-aacb-1f9890a5ddc6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e263b262-50b3-4a5b-b18a-59211de4cd7f"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sektorEkonomi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="695" y="0" width="50" height="8" uuid="771fb533-f50a-47cb-965f-88268097da46">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a37941c2-fb0e-4008-9efe-3c9b0ee402d4"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{metodePencatatan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="420" y="0" width="45" height="8" uuid="679ba99c-c17f-4488-8ad5-0ec083184bb4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="01eda64b-379c-414e-8228-999b15793667"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nilaiPerolehan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="30" height="8" uuid="4e4c9c43-6890-4c6a-9f54-9b45f4dd71f9">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
+<head>
+    <title>Grid Validasi Serap Anggaran</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta layout:fragment="custom-style">
+    <link rel="stylesheet"
+          th:href="@{/metronic/plugins/custom/datatables/datatables.bundle.css}"/>
+    </meta>
+    <script>
+
+    </script>
+    <style>
+        .form-body-row {
+            margin: 0px !important;
+            margin-bottom: 5px !important;
+            height: 29px;
+        }
+
+        .form-body-label {
+            width: 50%;
+            text-align: right;
+            padding-right: 5px;
+        }
+
+        .form-body-input {
+            width: 50%;
+        }
+
+        .modal-footer {
+            text-align: center;
+        }
+
+        .rekening-row {
+            height: 35px;
+        }
+
+        #tblSerap_processing {
+            margin-top: 20px;
+        }
+
+        div.dataTables_wrapper div.dataTables_processing {
+           top: 40%;
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="custom-content">
+    <div
+            class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+        <!--begin::Portlet-->
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">Validasi Serap Anggaran</h3>
+                </div>
+            </div>
+            <div class="kt-form">
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered table-striped dataTable" id="tblSerap"
+                                   width="100%"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="add-form" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Serap Anggaran</h5>
+                    <input id="statusModal" type="text" style="display: none">
+                </div>
+                <div class="modal-body">
+                    <div class="form-body">
+                        <div class="row form-body-row">
+                            <div class="form-body-label" style="width: 20%">
+                                <label class="col-form-label">No. Serap:</label>
+                            </div>
+                            <div class="form-body-input" style="width: 150px">
+                                <input type="text" class="form-control" id="noSerap">
+                            </div>
+                        </div>
+                        <div class="row form-body-row">
+                            <div class="form-body-label" style="width: 20%">
+                                <label class="col-form-label">Tanggal:</label>
+                            </div>
+                            <div class="form-body-input" style="width: 150px">
+                                <div class=''>
+                                    <div class="form-group">
+                                        <div class='input-group date' id='datetimepicker3'>
+                                            <input type='text' class="form-control" id="tanggal" readonly/>
+                                            <div class="input-group-append">
+                                                <button class="input-group-text" id="dateButton" onclick="testButton()" disabled><i class="fa fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-body-label" style="width: 135px">
+                                <label class="col-form-label">Tahun Buku:</label>
+                            </div>
+                            <div class="form-body-input" style="width: 102px">
+                                <input type="text" class="form-control" id="tahunBuku" disabled>
+                                <input type="text" class="form-control" id="idTahunBuku" hidden>
+                            </div>
+                        </div>
+                        <div class="row form-body-row">
+                            <div class="form-body-label" style="width: 20%">
+                                <label class="col-form-label">Total Transaksi:</label>
+                            </div>
+                            <div class="form-body-input" style="width: 150px">
+                                <input type="text" class="form-control text-right" id="totalTransaksi">
+                            </div>
+                            <div class="form-body-label" style="width: 135px">
+                                <label class="col-form-label">Periode:</label>
+                            </div>
+                            <div class="form-body-input" style="width: 102px">
+                                <input type="text" class="form-control" id="periode" readonly>
+                                <input type="text" class="form-control" id="idPeriode" hidden>
+                            </div>
+                        </div>
+                        <div class="row form-body-row" style="height: auto">
+                            <div class="form-body-label" style="width: 20%">
+                                <label class="col-form-label">Keterangan Debit/Kredit:</label>
+                            </div>
+                            <div class="form-body-input">
+                                <textarea class="form-control" id="keteranganDebit" style="resize: none; height: auto !important" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="row form-body-row" style="height: auto">
+                            <div class="form-body-label" style="width: 20%">
+                                <label class="col-form-label">Alasan:</label>
+                            </div>
+                            <div class="form-body-input">
+                                <textarea class="form-control" id="keteranganKredit" style="resize: none; height: auto !important" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="row form-body-row" style="height: auto; justify-content: center">
+                            <div style="width: 100%">
+                                <div style="width: 90%; margin-left: auto; margin-right: auto">
+                                    <label>Perpindahan Rekening:</label>
+                                </div>
+                                <table id="tblPerpindahan" class="" style="width: 90%; margin-left: auto; margin-right: auto">
+                                    <tbody style="border-top: 1.5px solid black; border-bottom: 1.5px solid black">
+                                    <tr class="">
+                                        <th width="20%">Nomor Rekening</th>
+                                        <th width="20%">Nama Rekening</th>
+                                        <th width="20%" class="text-center">Saldo Anggaran</th>
+                                        <th width="20%" class="text-center">Debit</th>
+                                        <th width="20%" class="text-center">Kredit</th>
+                                    </tr>
+                                    <tr class="rekening-row" id="noContent">
+                                        <td colspan="5" class="text-center">Pilih Rekening</td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr class="rekening-row" id="totalDebitKredit" style="text-align: right" hidden>
+                                        <td colspan="3">Total</td>
+                                        <td>
+                                            <label id="totalDebit"></label>
+<!--                                            <input type="text" class="form-control" id="totalDebit" style="text-align: right" readonly>-->
+                                        </td>
+                                        <td>
+                                            <label id="totalKredit"></label>
+<!--                                            <input type="text" class="form-control" id="totalKredit" style="text-align: right" readonly>-->
+                                        </td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                        </div>
+                        <div class="row form-body-row" hidden>
+                            <div class="form-body-label">
+                                <label class="col-form-label">Created Date:</label>
+                            </div>
+                            <div class="form-body-input">
+                                <input type="text" class="form-control" id="createdDate">
+                            </div>
+                        </div>
+                        <div class="row form-body-row" hidden>
+                            <div class="form-body-label">
+                                <label class="col-form-label">Created Date:</label>
+                            </div>
+                            <div class="form-body-input">
+                                <input type="text" class="form-control" id="createdBy">
+                            </div>
+                        </div>
+                        <div class="row form-body-row" hidden>
+                            <div class="form-body-label">
+                                <label class="col-form-label">Status Data:</label>
+                            </div>
+                            <div class="form-body-input">
+                                <input type="text" class="form-control" id="statusData">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width: 60px" id="batalButton">Batal</button>
+                    <button type="button" class="btn btn-danger" style="width: 60px" id="tolakSerap">Tolak</button>
+                    <button type="button" class="btn btn-success" style="width: 60px" id="setujuiSerap">Setujui</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade child-modal" id="rekening-form" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Rekening</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-body">
+                        <table class="table table-bordered table-striped dataTable" id="tblRekening"
+                               width="100%"></table>
+                    </div>
+                </div>
+                <div class="modal-footer" style="">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width: 60px" id="batalRekening">Batal</button>
+                    <button type="button" class="btn btn-primary" style="" id="pilihRekening">Pilih</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="reject-form" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Reject</h5>
+                </div>
+                <div class="modal-body">
+                    <textarea class="form-control" id="keteranganReject" style="resize: none; height: auto !important" rows="3"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="confirmReject">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section layout:fragment="custom-script">
+    <script>
+        /*<![CDATA[*/
+
+        /*]]>*/
+    </script>
+    <script
+            th:src="@{/metronic/plugins/custom/datatables/datatables.bundle.js}"
+            type="text/javascript">
+
+    </script>
+    <script th:src="@{/js/transaksi/validasiSerapAnggaran.js}"
+            type="text/javascript">
+    </script>
+    <script th:src="@{/vendors/momentjs/moment-with-locales.min.js}" type="text/javascript"></script>
+</section>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

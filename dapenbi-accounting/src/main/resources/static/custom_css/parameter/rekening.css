@@ -1,0 +1,10 @@
+.text-bold {
+    font-weight: bold;
+}
+
+table.dataTable tbody > tr td{
+    padding-top:0px;
+    padding-bottom:0px;
+    margin-top:0px;
+    margin-bottom:0px;
+}

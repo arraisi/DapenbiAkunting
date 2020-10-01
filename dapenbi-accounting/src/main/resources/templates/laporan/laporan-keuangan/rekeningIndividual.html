@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
+<head>
+    <title>Rekening Individual</title>
+    <meta layout:fragment="custom-style">
+    <link rel="stylesheet" th:href="@{/metronic/plugins/custom/datatables/datatables.bundle.css}"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/css/jqx.base.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/styles/jqx.light.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/css/img.css}"/>
+    <link rel="stylesheet" th:href="@{/vendors/pace-1.0.2/themes/purple/pace-theme-loading-bar.css}"/>
+    </meta>
+    <style>
+        .form-body-row {
+            margin: 0px !important;
+            margin-bottom: 5px !important;
+            height: 29px;
+        }
+
+        .form-body-label {
+            width: 50%;
+            text-align: right;
+            padding-right: 5px;
+        }
+
+        .form-body-input {
+            width: 50%;
+        }
+
+        .modal-footer {
+            text-align: center;
+        }
+
+        .dropdown-toggle {
+            border-color: #ced4da !important;
+        }
+
+        #tblPeriode_processing {
+            margin-top: 20px;
+        }
+
+        div.dataTables_wrapper div.dataTables_processing {
+            top: 40%;
+        }
+
+        /*.pdfobject-container {*/
+        /*    height: 90vh;*/
+        /*    width: 100%;*/
+        /*    border: 1rem solid rgba(0,0,0,.1);*/
+        /*}*/
+    </style>
+</head>
+<body>
+<section layout:fragment="custom-content">
+    <div class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+        <!--begin::Portlet-->
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">Rekening Individual</h3>
+                </div>
+            </div>
+            <div class="kt-form">
+                <div class="kt-portlet__body">
+                    <div class="row" hidden>
+                        <div class="col-12 col-md-2 col-lg-2 col-xl-1">
+                            <label class="col-form-label">Tahun Buku</label>
+                        </div>
+                        <div class="col-3 col-sm-2 col-md-1 col-lg-1 col-xl-1">
+                            <input type='text' class="form-control" id="txtKodeTahunBuku" readonly/>
+                        </div>
+                        <div class="col-9 col-sm-4 col-md-3 col-lg-3 col-xl-2">
+                            <input type='text' class="form-control" id="txtNamaTahunBuku" readonly/>
+                        </div>
+                    </div>
+                    <div class="row" hidden>
+                        <div class="col-12 col-md-2 col-lg-2 col-xl-1">
+                            <label class="col-form-label">Periode</label>
+                        </div>
+                        <div class="col-3 col-sm-2 col-md-1 col-lg-1 col-xl-1">
+                            <input type='text' class="form-control" id="txtKodePeriode" readonly/>
+                        </div>
+                        <div class="col-5 col-sm-3 col-md-2 col-lg-3 col-xl-2">
+                            <input type='text' class="form-control" id="txtNamaPeriode" readonly/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-2 col-lg-2 col-xl-1">
+                            <label class="col-form-label">Rekening</label>
+                        </div>
+                        <div class="col-6 col-md-2 col-lg-2 col-xl-2 pb-1">
+                            <input type='text' class="form-control" id="txtKodeRekening" placeholder="Kode"
+                                   readonly/>
+                        </div>
+                        <div class="col-12 col-md-8 col-lg-6 col-xl-6 pb-1">
+                            <div class="input-group">
+                                <input type="text" readonly id="txtNamaRekening" placeholder="Nama"
+                                       class="form-control kt-input"/>
+                                <div class="input-group-append">
+                                    <button type="button" class="input-group-text btn btn-secondary" data-toggle="modal"
+                                            data-target="#rekeningDialog">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-2 col-lg-2 col-xl-1">
+                            <label class="col-form-label">Tanggal</label>
+                        </div>
+                        <div class="col-7 col-sm-3 col-md-3 col-lg-2 col-xl-2">
+                            <div class='input-group date' id='periodeDatepicker1'>
+                                <input type='text' class="form-control" id="tglPeriode1" readonly/>
+                                <div class="input-group-append">
+                                    <button class="input-group-text" id="btnPeriode1" onclick="datePicker()"><i
+                                            class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 col-sm-1 col-md-1 col-lg-1 col-xl-1 text-center">
+                            <label class="col-form-label">s/d</label>
+                        </div>
+                        <div class="col-7 col-sm-3 col-md-3 col-lg-2 col-xl-2">
+                            <div class='input-group date' id='periodeDatepicker2'>
+                                <input type='text' class="form-control" id="tglPeriode2" readonly/>
+                                <div class="input-group-append">
+                                    <button class="input-group-text" id="btnPeriode2" onclick="datePicker()"><i
+                                            class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kt-portlet__foot">
+                <button type="button" class="btn btn-secondary" id="resetFormBtn" onclick="resetForm()">Reset Filter
+                </button>
+                <button type="button" class="btn btn-danger" id="export-pdf"
+                        onclick="exportPdf()">
+                    <span class="spinner-border spinner-border-sm mb-1" hidden id="spinnerBtnPdf"></span>&nbsp;PDF
+                </button>
+                <button type="button" class="btn btn-success" id="export-excel"
+                        onclick="exportExcel()">
+                    <span class="spinner-border spinner-border-sm mb-1" hidden id="spinnerBtnExcel"></span>&nbsp;Excel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!--REKENING DIALOG-->
+    <div class="modal fade" id="rekeningDialog" tabindex="-1" role="dialog"
+         aria-labelledby="parameterFormDialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+            <form>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Rekening</h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12">
+                            <table id="rekeningDatatable" class="display table table-bordered table-striped dataTable"
+                                   width="100%" cellspacing="0">
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-simpan"
+                                data-dismiss="modal" id="pilihRekeningBtn" onclick="pilihRekeningBtnPressed()">Pilih
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--REKENING DIALOG-->
+
+    <div class="modal" id="delete-form" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Delete this data?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="deleteButton">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--PDF DIALOG-->
+<!--    <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog"-->
+<!--         aria-labelledby="parameterFormDialog" aria-hidden="true">-->
+<!--        <div class="modal-dialog modal-xl" role="document">-->
+<!--            <form>-->
+<!--                <div class="modal-content">-->
+<!--                    <div class="modal-body">-->
+<!--                        <div id="example1"></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+    <!--PDF DIALOG-->
+</section>
+<section layout:fragment="custom-script">
+    <script th:src="@{/metronic/plugins/custom/datatables/datatables.bundle.js}" type="text/javascript"></script>
+    <script th:src="@{/vendors/pace-1.0.2/pace.js}" type="text/javascript"></script>
+    <script type="text/javascript" th:src="@{/vendors/numeraljs/numeral.min.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/momentjs/moment-with-locales.js}"></script>
+<!--    <script type="text/javascript" src="/vendors/momentjs/moment-with-locales.js"></script>-->
+    <script th:src="@{/js/laporan/laporan-keuangan/rekeningIndividual.js}"
+            type="text/javascript">
+    </script>
+</section>
+</body>
+</html>

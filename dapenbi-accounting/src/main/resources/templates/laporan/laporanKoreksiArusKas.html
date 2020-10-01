@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
+<head>
+    <title>Laporan Koreksi Arus Kas</title>
+    <meta layout:fragment="custom-style">
+    <link rel="stylesheet" th:href="@{/metronic/plugins/custom/datatables/datatables.bundle.css}"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/css/jqx.base.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/styles/jqx.light.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/css/img.css}"/>
+    <link rel="stylesheet" th:href="@{/vendors/pace-1.0.2/themes/purple/pace-theme-flat-top.css}"/>
+    </meta>
+    <style>
+        .form-body-row {
+            margin: 0px !important;
+            margin-bottom: 5px !important;
+            height: 29px;
+        }
+
+        .form-body-label {
+            /*width: 50%;*/
+            text-align: right;
+            padding-right: 5px;
+        }
+
+        .form-body-input {
+            width: 50%;
+        }
+
+        .modal-footer {
+            text-align: center;
+        }
+
+        .dropdown-toggle {
+            border-color: #ced4da !important;
+        }
+
+        #tblArusKasRincian_processing {
+            margin-top: 36px;
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="custom-content">
+    <div
+            class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+        <!--begin::Portlet-->
+        <div class="kt-portlet pb-4">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">Master Arus Kas</h3>
+                </div>
+            </div>
+            <div class="kt-form">
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered table-striped dataTable" id="tblArusKas"
+                                   width="100%"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--begin::Portlet-->
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">Perincian Arus Kas</h3>
+                </div>
+            </div>
+            <div class="kt-form">
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered table-striped dataTable" id="tblArusKasRincian"
+                                   width="100%"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="add-form-arus-kas-rincian" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Koreksi Rincian Arus Kas</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <input id="statusModalArusKasRincian" type="text" style="display: none">
+                </div>
+                <div class="modal-body">
+                    <div class="form-body row">
+                        <div class="col-custom" style="width: 50%">
+                            <div class="row form-body-row">
+                                <div class="form-body-label" style="width: 30%">
+                                    <label class="col-form-label">Kode Rincian:</label>
+                                </div>
+                                <div class="form-body-input row" style="margin: 0px">
+                                    <input type="text" class="form-control col-4" id="kodeArusKasRead"
+                                           readonly>
+                                    &nbsp
+                                    <input type="text" class="form-control col-4" id="kodeArusKasRincian" readonly>
+                                </div>
+                            </div>
+                            <div class="row form-body-row">
+                                <div class="form-body-label" style="width: 30%">
+                                    <label class="col-form-label">Rekening:</label>
+                                </div>
+                                <div class="form-body-input">
+                                    <div class="form-group">
+                                        <div class='input-group date' id='rekeningField'>
+                                            <input type="text" id="trueIdRekening" hidden>
+                                            <input type='text' class="form-control" id="idRekening" readonly/>
+                                            <div class="input-group-append">
+                                                <button class="input-group-text" id="rekeningTrigger" data-toggle="modal"
+                                                        data-target="#rekening-form" data-backdrop="static"
+                                                        data-keyboard="false"><i class="fa fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-body-row">
+                                <div class="form-body-label" style="width: 30%">
+                                    <label class="col-form-label">Keterangan:</label>
+                                </div>
+                                <div class="form-body-input">
+                                    <input type="text" class="form-control" id="keteranganArusKasRincian" readonly>
+                                </div>
+                            </div>
+                            <div class="row form-body-row">
+                                <div class="form-body-label" style="width: 30%">
+                                    <label class="col-form-label">Saldo Tahun Lalu:</label>
+                                </div>
+                                <div class="form-body-input">
+                                    <input type="text" class="form-control text-right" id="saldoAwalTahun"
+                                           onkeypress="return onlyNumberKey(event)" readonly>
+                                </div>
+                            </div>
+                            <div class="row form-body-row">
+                                <div class="form-body-label" style="width: 30%">
+                                    <label class="col-form-label">Rumus:</label>
+                                </div>
+                                <div class="form-body-input">
+                                    <select class="form-control selectpicker" id="flagRumus" disabled>
+                                        <option value="">Pilih Rumus</option>
+                                        <option value="A">A - Saldo Awal</option>
+                                        <option value="D">D - Saldo Debet</option>
+                                        <option value="K">K - Saldo Kredit</option>
+                                        <option value="H">H - Saldo Akhir</option>
+                                        <option value="S">S - Saldo Tahun Lalu</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row form-body-row">
+                                <div class="form-body-label" style="width: 30%">
+                                    <label class="col-form-label">Kelompok:</label>
+                                </div>
+                                <div class="form-body-input">
+                                    <select class="form-control selectpicker" id="flagGroup" disabled>
+                                        <option value="">Pilih Kelompok</option>
+                                        <option value="1">1 - Kelompok 1</option>
+                                        <option value="2">2 - Kelompok 2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row form-body-row">
+                                <div class="form-body-label" style="width: 30%">
+                                    <label class="col-form-label">Status Aktif:</label>
+                                </div>
+                                <div class="form-body-input col-form-label" id="statusAktifArusKasRincian">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" name="statusAktifArusKasRincian" type="radio"
+                                               value="1" id="status-aktif-ya" disabled>
+                                        <label class="form-check-label" for="status-aktif-ya">Ya</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" name="statusAktifArusKasRincian" type="radio"
+                                               value="0" id="status-aktif-tidak" disabled>
+                                        <label class="form-check-label" for="status-aktif-tidak">Tidak</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-body-row" hidden>
+                                <div class="form-body-label" style="width: 30%">
+                                    <label class="col-form-label">Created Date:</label>
+                                </div>
+                                <div class="form-body-input">
+                                    <input type="text" class="form-control" id="createdDateArusKasRincian">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-custom" style="width: 50%">
+                            <div class="row">
+                                <div class="col-custom"><input type="text" class="form-control"></div>
+                                <div class="col-custom"><input type="text" class="form-control"></div>
+                                <div class="col-custom"><input type="text" class="form-control"></div>
+                            </div>
+                            <div class="row">
+                                <table id="tblPerpindahan" class="" style="width: 100%">
+                                    <tbody style="border-top: 1.5px solid black; border-bottom: 1.5px solid black">
+                                    <tr class="">
+                                        <th width="20%" class="text-center">Urut</th>
+                                        <th width="40%" class="text-center">Nilai</th>
+                                        <th width="10%" class="text-center">Operator</th>
+                                        <th width="30%" class="text-center">Tindakan</th>
+                                    </tr>
+                                    <tr class="rekening-row" id="noContent">
+                                        <td colspan="4" class="text-center">No Data</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer" style="justify-content: center" hidden>
+                    <button type="button" class="btn btn-sm btn-primary" id="saveArusKasRincianButton">
+                        Simpan
+                    </button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal"
+                            id="batalArusKasRincianButton">Batal
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section layout:fragment="custom-script">
+    <script th:src="@{/metronic/plugins/custom/datatables/datatables.bundle.js}" type="text/javascript"></script>
+    <script th:src="@{/vendors/pace-1.0.2/pace.js}" type="text/javascript"></script>
+    <script th:src="@{/js/laporan/laporanKoreksiArusKas.js}" type="text/javascript">
+    </script>
+</section>
+</body>
+</html>

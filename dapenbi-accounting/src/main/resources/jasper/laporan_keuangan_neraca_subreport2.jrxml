@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="laporan_dri_sementara_detail" pageWidth="400" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="400" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="19129ce2-72b1-47ed-8e7a-b23a26694968">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="judul" class="java.lang.String"/>
+	<field name="namaRekening" class="java.lang.String"/>
+	<field name="saldoBerjalan" class="java.math.BigDecimal"/>
+	<field name="saldoSebelum" class="java.math.BigDecimal"/>
+	<field name="cetakJudul" class="java.lang.String"/>
+	<field name="cetakMiring" class="java.lang.String"/>
+	<field name="cetakGaris" class="java.lang.String"/>
+	<field name="cetakTebal" class="java.lang.String"/>
+	<field name="tabs" class="java.lang.String"/>
+	<field name="warna" class="java.lang.String"/>
+	<variable name="totalSaldoBerjalan" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldoBerjalan}]]></variableExpression>
+	</variable>
+	<variable name="totalSaldoSebelum" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldoSebelum}]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="1" width="200" height="14" uuid="7cb616dd-4d75-4501-bdd9-72d54c44b23a">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
+					<font size="8" isItalic="false"/>
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tabs}+"<style forecolor='"+$F{warna}+"' isBold='"+($F{cetakJudul}.equals("1") ? "true" : "false")+"' isItalic='"+($F{cetakMiring}.equals("1") ? "true" : "false")+"'>"+$F{judul}+"</style>"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#" isBlankWhenNull="true">
+				<reportElement x="200" y="0" width="100" height="15" uuid="e6762130-c480-4e0c-a712-79be4e9c7b21">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cetakJudul}.equals("1") ? " " : ($F{saldoBerjalan}.compareTo( BigDecimal.ZERO )  < 0 ? "("+ new java.text.DecimalFormat("#,##0.00#").format($F{saldoBerjalan}.abs()) +")" : $F{saldoBerjalan})]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" pattern="#,##0.00#" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="300" y="0" width="100" height="15" uuid="db63fca0-01ac-4274-b523-52b1e179745b">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
+					<font size="8"/>
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cetakJudul}.equals("1") ? " " : ($F{saldoSebelum}.compareTo( BigDecimal.ZERO )  < 0 ? "("+ new java.text.DecimalFormat("#,##0.00#").format($F{saldoSebelum}.abs()) +")" : $F{saldoSebelum})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

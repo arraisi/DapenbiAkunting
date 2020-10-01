@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
+<head>
+    <title>Dashboard</title>
+    <meta layout:fragment="custom-style">
+<!--    <link rel="stylesheet"-->
+<!--          th:href="@{/metronic/plugins/custom/datatables/datatables.bundle.css}"/>-->
+    </meta>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <style>
+        .row {
+            margin: 0px;
+        }
+
+        .col, .col-custom {
+            padding: 5px;
+        }
+
+        .tabs {
+            background-color: #edeff2;
+            width: 25%;
+        }
+
+        .active-button, .tabs:hover {
+            color: white;
+            background-color: #4287f5;
+        }
+    </style>
+</head>
+<body>
+    <section layout:fragment="custom-content">
+        <div class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+            <div class="kt-portlet" style="width: 80%">
+                <div class="btn-group btn-group-sm" role="group" id="menu-tabs">
+                </div>
+            </div>
+
+            <!--begin::Portlet-->
+            <div class="kt-portlet">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title" id="title">Aset Neto</h3>
+                    </div>
+                </div>
+                <div class="kt-form">
+                    <div class="kt-portlet__body">
+                        <div class="row" hidden>
+                            <div class="col">
+                                <select class="form-control" id="grafik" onchange="changeGraph($(this)[0].value)">
+                                    <option value="hbar">Bar</option>
+                                    <option value="pie">Pie</option>
+                                    <option value="hbar3d">3D-Bar</option>
+                                    <option value="pie3d">3D-Pie</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col" style="padding: 0px">
+                                        <label class="col-form-label">Periode</label>
+                                    </div>
+                                    <div class="col" style="padding: 0px">
+                                        <select class="form-control" id="periode" onchange="dateFieldControl($(this)[0].value)">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class=''>
+                                    <div class="form-group">
+                                        <div class='input-group date' id='date1picker' hidden>
+                                            <input type='text' class="form-control" id="date1" readonly/>
+                                            <div class="input-group-append">
+                                                <button class="input-group-text" id="date1Button" onclick="datePicker($(this))"><i class="fa fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class=''>
+                                    <div class="form-group">
+                                        <div class='input-group date' id='date2picker' hidden>
+                                            <input type='text' class="form-control input-date" id="date2" readonly/>
+                                            <div class="input-group-append">
+                                                <button class="input-group-text" id="date2Button" onclick="datePicker($(this))"><i class="fa fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class=''>
+                                    <div class="form-group">
+                                        <div class='input-group date' id='date3picker' hidden>
+                                            <input type='text' class="form-control input-date" id="date3" readonly/>
+                                            <div class="input-group-append">
+                                                <button class="input-group-text" id="date3Button" onclick="datePicker($(this))"><i class="fa fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class=''>
+                                    <div class="form-group">
+                                        <div class='input-group date' id='date4picker' hidden>
+                                            <input type='text' class="form-control input-date" id="date4" readonly/>
+                                            <div class="input-group-append">
+                                                <button class="input-group-text" id="date4Button" onclick="datePicker($(this))"><i class="fa fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class=''>
+                                    <div class="form-group">
+                                        <div class='input-group date' id='date5picker' hidden>
+                                            <input type='text' class="form-control input-date" id="date5" readonly/>
+                                            <div class="input-group-append">
+                                                <button class="input-group-text" id="date5Button" onclick="datePicker($(this))"><i class="fa fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-custom">
+                                <div class="row">
+                                    <div class="col-custom" style="">
+                                        <div class="row">
+                                            <div class="col-custom" style="">
+                                                <label class="col-form-label">Periode</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-custom" style="">
+                                        <div class="row">
+                                            <div class="col-custom">
+                                                <select class="form-control selectpicker" disabled>
+                                                    <option value="01">JAN</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-custom">
+                                                <label class="col-form-label">s/d</label>
+                                            </div>
+                                            <div class="col-custom">
+                                                <select class="form-control selectpicker" id="kodePeriode">
+                                                    <option value="01">JAN</option>
+                                                    <option value="02">FEB</option>
+                                                    <option value="03">MAR</option>
+                                                    <option value="04">APR</option>
+                                                    <option value="05">MEI</option>
+                                                    <option value="06">JUN</option>
+                                                    <option value="07">JUL</option>
+                                                    <option value="08">AGS</option>
+                                                    <option value="09">SEP</option>
+                                                    <option value="10">OKT</option>
+                                                    <option value="11">NOV</option>
+                                                    <option value="12">DES</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-custom">
+                                        <div class="row">
+                                            <div class="col-custom">
+                                                <label class="col-form-label">Tahun</label>
+                                            </div>
+                                            <div class="col-custom">
+                                                <select class="form-control selectpicker" id="kodeTahunBuku">
+                                                    <option th:each="tahunBuku : ${listTahunBuku}" th:value="${tahunBuku.kodeTahunBuku}" th:text="${tahunBuku.namaTahunBuku}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-custom">
+                                        <div class="row">
+                                            <div class="col-custom">
+                                                <label class="col-form-label">DRI</label>
+                                            </div>
+                                            <div class="col-custom">
+                                                <select class="form-control selectpicker" id="kodeDRI">
+                                                    <option value="1">DRI 1</option>
+                                                    <option value="2">DRI 2</option>
+                                                    <option value="3">DRI 3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-custom">
+                                        <div class="row">
+                                            <div class="col-custom">
+                                                <button class="btn btn-danger" id="export-pdf">PDF</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+<!--                                <canvas id="myChart" width="800" height="400"></canvas>-->
+                                <div id='myChart'></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section layout:fragment="custom-script">
+        <script th:inline="javascript" type="text/javascript">
+            var pengaturanSistem = /*[[${pengaturanSistem}]]*/ '';
+        </script>
+        <script th:src="@{/js/dashboard/home.js}"
+                type="text/javascript">
+        </script>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous">
+    </script>
+<!--    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js">-->
+<!--    </script>-->
+</body>
+</html>

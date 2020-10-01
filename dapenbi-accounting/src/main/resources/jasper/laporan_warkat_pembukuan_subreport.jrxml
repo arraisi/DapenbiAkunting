@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.14.0.final using JasperReports Library version 6.14.0-2ab0d8625be255bf609c78e1181801213e51db8f  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="laporan_warkat_pembukuan_subreport" pageWidth="277" pageHeight="42" columnWidth="277" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b6bff3b3-2a10-4757-b963-7e89f5b765a0">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="kodeRekening" class="java.lang.String"/>
+	<field name="namaRekening" class="java.lang.String"/>
+	<field name="jumlah" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="14" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="0" width="65" height="14" uuid="5433bf8c-a2bb-4f80-ad8a-ef233b0fccdd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1a7daaf4-67ac-4f79-906a-1380844dd3c0"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[No. Rek/MA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="65" y="0" width="137" height="14" uuid="32c48993-104e-42e8-8087-1fa7181a05a2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d6e1a5e8-e3d4-4348-8578-ee8f75321aa1"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Nama Rekening/MA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="0" width="75" height="14" uuid="ed97a978-0d1d-4afa-a3a9-4ae559212122">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e7ce38dd-6273-4e2d-b9b5-c2b259aa18b6"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Jumlah]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="65" height="28" uuid="a66c6bc0-8871-4cfd-8e39-81fe2dfead89">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1a7daaf4-67ac-4f79-906a-1380844dd3c0"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box padding="3">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="0" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{kodeRekening}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="65" y="0" width="137" height="28" uuid="e02f7dd3-26ad-41af-a0ca-a3bc3457a9bc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d6e1a5e8-e3d4-4348-8578-ee8f75321aa1"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box padding="3">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="0" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{namaRekening}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###" isBlankWhenNull="true">
+				<reportElement x="202" y="0" width="75" height="28" uuid="3c3615f9-15b7-47cc-ae36-a4ab74453fea">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e7ce38dd-6273-4e2d-b9b5-c2b259aa18b6"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box padding="3">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="0" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{jumlah}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

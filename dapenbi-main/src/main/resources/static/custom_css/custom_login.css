@@ -1,0 +1,108 @@
+body {
+    background: #316c96;
+}
+.kt-login.kt-login--v5 .kt-login__left .kt-login__wrapper{
+    background-image: url("../images/login.svg");
+    background-repeat: no-repeat;
+    background-size: auto 70%;
+    height: 100%;
+    width: 100%;
+    background-position: center;
+}
+.kt-login.kt-login--v5 .kt-login__left .kt-login__wrapper .kt-login__content{
+    position: relative;
+    top: 0;
+    left: 0;
+    text-align: left;
+    height: 100%;
+    width: 100%;
+}
+
+.kt-login.kt-login--v5.kt-login--signin > div{
+    margin: 0;
+    position: relative;
+    background-color: #fdfdfd;
+}
+.kt-login.kt-login--v5 .kt-login__divider > div{height: 100%; width: 1px;}
+.kt-login.kt-login--v5 .kt-login__left .kt-login__wrapper .kt-login__content .kt-login__title {
+    margin: 0;
+    color: #595d6e;
+    font-size: 2.4rem;
+    font-weight: 500;
+    position: absolute;
+    bottom: 45px;
+    top: auto;
+}
+.kt-login.kt-login--v5 .kt-login__left .kt-login__wrapper .kt-login__content .kt-login__desc {
+    color: #74788d;
+    font-size: 1rem;
+    bottom: 25px;
+    position: absolute;
+    width: 100%;
+}
+.kt-login.kt-login--v5 .kt-login__right{background-color: #316C96;color: #fff}
+.kt-login.kt-login--v5 .kt-login__right .kt-login__wrapper .kt-login__title{color:#fff}
+.kt-login.kt-login--v5 .kt-login__right .kt-login__wrapper{width: auto;}
+.kt-login.kt-login--v5 .kt-login__right .kt-login__wrapper .kt-login__title,.kt-login.kt-login--v5 .kt-login__right .kt-login__wrapper .kt-login__head,.kt-login.kt-login--v5 .kt-login__right .kt-login__wrapper .kt-login__actions{text-align: left;}
+span.kt-input-icon__icon i.icon_username,span.kt-input-icon__icon i.icon_password{
+    width: 34px;
+    height: 34px;
+    background-size: 100%;
+    margin-left: 6px;
+    background-position: center;
+}
+span.kt-input-icon__icon i.icon_username{background-image: url("../images/username_icon.svg");}
+span.kt-input-icon__icon i.icon_password{background-image: url("../images/password_icon.svg");}
+.kt-login.kt-login--v5 .kt-login__right .kt-login__wrapper .kt-login__form .form-control{padding: 1rem 1rem 1rem 3.5rem;border-radius: 30px;border: 2px solid #316C96 !important;}
+.kt-login__form .kt-input-icon{margin-bottom: 20px;}
+
+@media (min-width: 1000px) and (max-width: 1024px)  {
+    .kt-grid.kt-grid--ver-desktop.kt-grid--desktop {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
+    .kt-login.kt-login--v5 .kt-login__divider{width: 0px;}
+    .kt-login.kt-login--v5 .kt-login__left{width: 50%;}
+    .kt-login.kt-login--v5 .kt-login__right{width: 50%;}
+}
+@media (min-width: 769px) and (max-width: 999px) {.kt-login.kt-login--v5.kt-login--signin > div{background-color:#e5f3fb}}
+
+@media (max-width: 768px) {
+    .kt-login.kt-login--v5 .kt-login__left .kt-login__wrapper .kt-login__content .kt-login__desc{font-size: 1.3rem;bottom: auto; position: relative;}
+    .kt-login.kt-login--v5 .kt-login__left .kt-login__wrapper .kt-login__content .kt-login__title{display: none;}
+    .kt-login.kt-login--v5 .kt-login__left .kt-login__wrapper .kt-login__content {
+        position: relative;
+        top: 0;
+        left: auto;
+        text-align: left;
+        width: auto;
+    }
+    .kt-login.kt-login--v5 .kt-login__left .kt-login__wrapper {
+        background-image: unset;
+        background-repeat: unset;
+        background-size: unset;
+        height: unset;
+        width: unset;
+        background-position: unset;
+    }
+    .kt-login.kt-login--v5.kt-login--signin > div {margin: 0;}
+    .kt-login.kt-login--v5 .kt-login__divider{margin:0;height: 3px;width: 100%;}
+    .kt-login.kt-login--v5 .kt-login__divider > div{
+        background: #316c96;
+        height: 100%;
+        width: 84%;
+        border-bottom: 1px solid #fff;
+    }
+    .kt-login.kt-login--v5 .kt-login__right{margin-top: 0;background-color:transparent;color:#333;}
+    .kt-login.kt-login--v5 .kt-login__right .kt-login__wrapper .kt-login__title{
+        color: #333;}
+    .kt-login.kt-login--v5 .kt-login__right .kt-login__wrapper .kt-login__title, .kt-login.kt-login--v5 .kt-login__right .kt-login__wrapper .kt-login__head, .kt-login.kt-login--v5 .kt-login__right .kt-login__wrapper .kt-login__actions {
+        text-align: center;
+    }
+    .kt-login.kt-login--v5 .btn{width: 100%;}
+}

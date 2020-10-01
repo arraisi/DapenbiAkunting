@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title id="Description">TreeGrid displaying JSON data</title>
+  <link rel="stylesheet" href="css/jqx.base.css" type="text/css" />
+  <link rel="stylesheet" href="css/jqx.energyblue.css" type="text/css" />
+    <!-- stylesheets -->
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/styles/main.css}"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/jqwidgets/styles/jqx.base.css}" media="screen"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/jqwidgets/styles/jqx.arctic.css}" media="screen"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/styles/site.css}" media="screen"/>
+
+    <!--[if !IE]><!-->
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/styles/img.css}"/>
+    <!--<![endif]-->
+
+
+  <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="js/jqx-all.js"></script>
+  <script type="text/javascript" src="js/jqxcore.js"></script>
+  <script type="text/javascript" src="js/jqxdata.js"></script>
+  <script type="text/javascript" src="js/jqxbuttons.js"></script>
+  <script type="text/javascript" src="js/jqxscrollbar.js"></script>
+  <script type="text/javascript" src="js/jqxdatatable.js"></script>
+  <script type="text/javascript" src="js/jqxtreegrid.js"></script>
+  <script type="text/javascript" src="rekening.js"></script>
+  <!-- <script type="text/javascript" src="demo.js"></script> -->
+  <!-- <script type="text/javascript" src="demo2.js"></script> -->
+</head>
+
+<body class='default'>
+  <div id="treeGrid">
+  </div>
+  <input type="button" style="margin: 20px;" id="jqxbutton" value="Expands all rows" />
+  <input type="button" style="margin: 20px;" id="jqxbuttonfilter" value="Add new filter" />
+</body>
+</html>

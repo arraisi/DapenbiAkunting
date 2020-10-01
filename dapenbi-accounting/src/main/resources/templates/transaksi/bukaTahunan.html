@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
+<head>
+    <title>Pengaturan Sistem</title>
+    <link rel="stylesheet" th:href="@{/metronic/plugins/custom/datatables/datatables.bundle.css}"/>
+    <link rel="stylesheet" th:href="@{/vendors/pace-1.0.2/themes/purple/pace-theme-flat-top.css}"/>
+    <style>
+        .input-group-text {
+            height: 28px;
+        }
+
+        .tabs {
+            background-color: #edeff2;
+        }
+
+        .active-button, .tabs:hover {
+            color: white;
+            background-color: #4287f5;
+        }
+
+        .textCurrency {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="custom-content">
+    <div
+            class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+        <!--begin::Portlet-->
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">Buka Sistem</h3>
+                </div>
+            </div>
+            <div class="kt-form">
+                <div class="kt-portlet__body">
+                    <!-- edited -->
+                    <div class="container m-0" style="width: 100%">
+                        <div class="row">
+                            <div class="col">
+<!--                                <div class="form-group row">-->
+<!--                                    <label color="red" class="col-7" id="message"></label>-->
+<!--                                    <div class="col-sm-4">-->
+<!--                                        <font class="col-7" th:if="${showMessage}" th:text="${message}"-->
+<!--                                              id="libur"></font>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="form-group row">-->
+<!--                                    <label for="txtTglTransaksi" class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-form-label text-right">Tanggal Transaksi</label>-->
+<!--                                    <div class="input-group date col-xl-2 col-lg-3 col-md-3 col-sm-4">-->
+<!--                                        <input type="text" class="form-control" id="txtTglTransaksi"-->
+<!--                                               placeholder="yyyy-mm-dd" readonly>-->
+<!--                                        <div class="input-group-append"><span class="input-group-text"><i class="fa fa-calendar"></i></span>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+                                <div class="form-group row">
+                                    <label for="txtTglTransaksi" class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-form-label text-right">Tanggal Transaksi</label>
+                                    <div class="input-group date col-sm-4 datepicker-group"
+                                         data-provide="datepicker">
+                                        <input type="text" class="form-control" id="txtTglTransaksi"
+                                               placeholder="yyyy-mm-dd">
+                                        <div class="input-group-append"><span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="txtTglTransaksi" class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-form-label text-right">Tahun Buku</label>
+                                    <div class="col-xl-3 col-lg-4 col-md-4 col-sm-5">
+                                        <input type="text" class="form-control" id="txtTahunBuku" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="txtPeriode" class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-form-label text-right">Periode</label>
+                                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-4">
+                                        <input type="text" class="form-control" id="txtPeriode" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="txtStatusDRI" class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-form-label text-right">Status DRI</label>
+                                    <div class="col-xl-1 col-lg-1 col-md-2 col-sm-3">
+                                        <input type="text" class="form-control" id="txtStatusDRI" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="radioBukaSistem" class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-form-label text-right">Status Sistem</label>
+                                    <div class="col-sm-6" id="radioBukaSistem">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" id="sistemTerbuka" name="radioBukaSistem" value="1"
+                                                   disabled>
+                                            <label class="m-0">&nbsp;Terbuka</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" id="sistemTertutup" name="radioBukaSistem" value="0"
+                                                   disabled>
+                                            <label class="m-0">&nbsp;Tertutup</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__foot">
+                    <button type="button" class="btn btn-secondary" id="btnBatal">Batal</button>
+                    <button type="button" class="btn btn-primary" id="btnSimpan" onclick="bukaSistem(); disableButton(this)"><i class="fa fa-lock" aria-hidden="true"></i>Buka</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section layout:fragment="custom-script">
+    <script th:src="@{/vendors/cleave.js}" type="text/javascript"></script>
+    <script th:src="@{/metronic/plugins/custom/datatables/datatables.bundle.js}" type="text/javascript"></script>
+    <script th:src="@{/vendors/pace-1.0.2/pace.js}" type="text/javascript"></script>
+    <script th:src="@{/js/transaksi/bukaTahunan.js}" type="text/javascript"></script>
+    <script type="text/javascript" th:src="@{/vendors/numeraljs/numeral.min.js}"></script>
+    <script type="text/javascript">
+        function disableButton(element) {
+            document.getElementById(element.id).disabled = true;
+        }
+        function enableButton() {
+            document.getElementById("btnSimpan").disabled = false;
+        }
+    </script>
+</section>
+</body>
+</html>

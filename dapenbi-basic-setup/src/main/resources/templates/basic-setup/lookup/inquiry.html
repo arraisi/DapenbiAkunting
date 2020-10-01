@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<title>Lookup</title>
+<meta layout:fragment="custom-style">
+<link rel="stylesheet"
+	th:href="@{/metronic/plugins/custom/datatables/datatables.bundle.css}" />
+</meta>
+</head>
+<body>
+	<section layout:fragment="custom-content">
+		<div
+			class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+			<!--begin::Portlet-->
+			<div class="kt-portlet">
+				<div class="kt-portlet__head">
+					<div class="kt-portlet__head-label">
+						<h3 class="kt-portlet__head-title">Lookup Inquiry</h3>
+					</div>
+				</div>
+				<div class="kt-form">
+					<div class="kt-portlet__body">
+						<div class="kt-form__section kt-form__section--first">
+							<div class="form-group kt-form__group row">
+								<label class="col-lg-3 col-form-label">Lookup Code</label>
+								<div class="col-lg-6">
+									<input type="text" id="txtLookupCodeFinder"
+										class="form-control kt-input" />
+								</div>
+							</div>
+                            <div class="form-group kt-form__group row">
+                                <label class="col-lg-3 col-form-label">Flag Active</label>
+                                <div class="col-lg-6">
+                                    <div class="kt-radio-inline">
+                                        <label class="kt-radio">
+                                            <input type="radio" name="radFlagActiveFinder" value="true"> True
+                                            <span></span>
+                                        </label>
+                                        <label class="kt-radio">
+                                            <input type="radio" name="radFlagActiveFinder" value="false"> False
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group kt-form__group row">
+                                <label class="col-lg-3 col-form-label">Flag System</label>
+                                <div class="col-lg-6">
+                                    <div class="kt-radio-inline">
+                                        <label class="kt-radio">
+                                            <input type="radio" name="radFlagSystemFinder" value="true"> True
+                                            <span></span>
+                                        </label>
+                                        <label class="kt-radio">
+                                            <input type="radio" name="radFlagSystemFinder" value="false"> False
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+							<div class="form-group kt-form__group row">
+								<label class="col-lg-3 col-form-label"></label>
+								<div class="col-lg-6">
+									<button class="btn btn-sm btn-success" type="button"
+										id="btnFind">
+										<i class="fa fa-search"></i> Find
+									</button>
+									<button class="btn btn-sm btn-default" type="button"
+										id="btnClear">
+										<i class="fa fa-eraser"></i> Clear Search Criteria
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<button type="button" class="btn btn-sm btn-primary" id="btnAdd">
+									<i class="fa fa-plus"></i> Add
+								</button>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<table class="table table-bordered table-striped dataTable"
+									id="tblLookup" width="100%">
+									
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="formDialog" tabindex="-1" role="dialog"
+			aria-labelledby="parameterFormDialog" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<form>
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Add / Edit</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="kt-form kt-form--fit">
+								<div class="form-group kt-form__group row">
+									<label class="col-4 col-form-label">Lookup Code</label>
+									<div class="col-8">
+										<input class="form-control kt-input" name="lookupCode"
+											type="text" id="txtLookupCode"> <input type="hidden"
+											id="txtLookupId" class="form-control kt-input" />
+									</div>
+								</div>
+								<div class="form-group kt-form__group row">
+									<label class="col-4 col-form-label">Flag Active</label>
+									<div class="col-8">
+										<div class="kt-radio-inline">
+											<label class="kt-radio"> <input type="radio"
+												name="flagActive" id="radFlagActiveTrue" value="true">
+												True <span></span>
+											</label> <label class="kt-radio"> <input type="radio"
+												name="flagActive" id="radFlagActiveFalse" value="false">
+												False <span></span>
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group kt-form__group row">
+									<label class="col-4 col-form-label">Flag System</label>
+									<div class="col-8">
+										<div class="kt-radio-inline">
+											<label class="kt-radio"> <input type="radio"
+												name="flagSystem" id="radFlagSystemTrue"
+												value="true"> True <span></span>
+											</label> <label class="kt-radio"> <input type="radio"
+												name="flagSystem" id="radFlagSystemFalse"
+												value="false"> False <span></span>
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary btn-save">Save</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+	<section layout:fragment="custom-script">
+		<script
+			th:src="@{/metronic/plugins/custom/datatables/datatables.bundle.js}"
+			type="text/javascript">
+			
+		</script>
+		<script th:src="@{/page_js/basic-setup/lookup/inquiry.js}"
+			type="text/javascript">
+			
+		</script>
+	</section>
+</body>
+</html>

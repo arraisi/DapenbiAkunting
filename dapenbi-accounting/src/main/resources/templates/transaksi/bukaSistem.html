@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
+<head>
+    <title>Pengaturan Sistem</title>
+    <link rel="stylesheet" th:href="@{/metronic/plugins/custom/datatables/datatables.bundle.css}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script>
+
+    </script>
+    <style>
+        .input-group-text {
+            height: 28px;
+        }
+
+        .tabs {
+            background-color: #edeff2;
+        }
+
+        .active-button, .tabs:hover {
+            color: white;
+            background-color: #4287f5;
+        }
+
+        .textCurrency {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="custom-content">
+    <div
+            class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+        <!--begin::Portlet-->
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">Buka Sistem</h3>
+                </div>
+            </div>
+            <div class="kt-form">
+                <div class="kt-portlet__body">
+                    <!-- edited -->
+                    <div class="container m-0" style="width: 100%">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group row">
+                                    <label color="red" class="col-7" id="message"></label>
+                                    <div class="col-sm-4">
+                                        <font class="col-7" th:if="${showMessage}" th:text="${message}"
+                                              id="libur"></font>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="tglTransaksiSebelum" class="col-sm-6 col-form-label">Tanggal Transaksi
+                                        Sebelumnya</label>
+                                    <div class="input-group date col-sm-4">
+                                        <input type="text" class="form-control" id="tglTransaksiSebelum"
+                                               placeholder="yyyy-mm-dd" readonly>
+                                        <div class="input-group-append"><span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="statusPemakai" class="col-sm-6 col-form-label">Status Pemakaian</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control pt-0 pb-0 kt-input custom-select"
+                                                id="statusPemakai" disabled>
+                                            <option value="">Status Pemakai</option>
+                                            <option value="0">Tidak Terdaftar</option>
+                                            <option th:each="data : ${statusPemakaiList}"
+                                                    th:value="${data.idOrg}"
+                                                    th:utext="${data.namaOrg}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="tglTransaksiSekarang" class="col-sm-6 col-form-label">Tanggal Transaksi
+                                        Sekarang</label>
+                                    <div class="input-group date col-sm-4 datepicker-group"
+                                         data-provide="datepicker">
+                                        <input type="text" class="form-control" id="tglTransaksiSekarang"
+                                               placeholder="yyyy-mm-dd">
+                                        <div class="input-group-append"><span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="radioBukaSistem" class="col-sm-6 col-form-label">Status Sistem</label>
+                                    <div class="col-sm-6" id="radioBukaSistem">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" id="statusAktifYa" name="radioBukaSistem" value="1"
+                                                   disabled>
+                                            <label>&nbsp;Buka Sistem</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" id="statusAktifTidak" name="radioBukaSistem" value="0"
+                                                   disabled>
+                                            <label>&nbsp;Tutup Sistem</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group col-sm-8">
+                                    <label for="noBukaSistem">No Buka Sistem</label>
+                                    <input type="number" class="form-control kt-input" id="noBukaSistem"/>
+                                </div>
+                                <div class="form-group col-sm-8">
+                                    <label for="nilaiAktiva">Nilai Aktiva</label>
+                                    <input type="text" id="nilaiAktiva" class="form-control kt-input textCurrency"/>
+                                </div>
+                                <div class="form-group col-sm-8">
+                                    <label for="nilaiPasiva">Nilai Pasiva</label>
+                                    <input type="text" id="nilaiPasiva"
+                                           class="form-control kt-input textCurrency"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- edited -->
+
+                    <!--                    <div class="kt-form kt-form&#45;&#45;fit">-->
+                    <!--                        <div class="form-group kt-form__group row col-12">-->
+                    <!--                            <div class="col-7"></div>-->
+                    <!--                            <label class="col-4 col-form-label">Nomor Buka Sistem</label>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="form-group kt-form__group row col-12">-->
+                    <!--                            <label class="col-3 col-form-label">Tanggal Transaksi Sebelumnya</label>-->
+                    <!--                            <div class="col-4">-->
+                    <!--                                <input type="date" class="form-control kt-input" id="tglTransaksiSebelum"-->
+                    <!--                                       readonly-->
+                    <!--                                />-->
+                    <!--                            </div>-->
+                    <!--                            <div class="col-4">-->
+                    <!--                                <input type="number" class="form-control kt-input" id="noBukaSistem"/>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="form-group kt-form__group row col-12">-->
+                    <!--                            <label class="col-3 col-form-label">Tanggal Transaksi Sekarang</label>-->
+                    <!--                            <div class="col-4">-->
+                    <!--                                <input type="date" class="form-control kt-input" id="tglTransaksiSekarang"-->
+                    <!--                                       readonly-->
+                    <!--                                />-->
+                    <!--                            </div>-->
+                    <!--                            <label class="col-4 col-form-label">Nilai Aktiva</label>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="form-group kt-form__group row col-12">-->
+                    <!--                            <label class="col-3 col-form-label">Status Pemakaian</label>-->
+                    <!--                            <div class="col-4">-->
+                    <!--                                <select class="form-control pt-0 pb-0 kt-input custom-select"-->
+                    <!--                                        id="statusPemakai" disabled>-->
+                    <!--                                    <option value="">Status Pemakai</option>-->
+                    <!--                                    <option value="0">Tidak Terdaftar</option>-->
+                    <!--                                    <option th:each="data : ${statusPemakaiList}"-->
+                    <!--                                            th:value="${data.idOrg}"-->
+                    <!--                                            th:utext="${data.namaOrg}"></option>-->
+                    <!--                                </select>-->
+                    <!--                            </div>-->
+                    <!--                            <div class="col-4">-->
+                    <!--                                <input type="number" id="nilaiAktiva"-->
+                    <!--                                       class="form-control kt-input"/>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="form-group kt-form__group row col-12" id="radioBukaSistem">-->
+                    <!--                            <label class="col-3 col-form-label">Status Sistem</label>-->
+                    <!--                            <div class="col-lg-2 col-md-4 col-sm-8 pt-2">-->
+                    <!--                                <input type="radio" id="statusAktifYa" name="radioBukaSistem" value="1" disabled>-->
+                    <!--                                <label>&nbsp;Buka Sistem</label><br>-->
+                    <!--                            </div>-->
+                    <!--                            <div class="col-lg-2 col-md-4 col-sm-8 pt-2">-->
+                    <!--                                <input type="radio" id="statusAktifTidak" name="radioBukaSistem" value="0" disabled>-->
+                    <!--                                <label>&nbsp;Tutup Sistem</label><br>-->
+                    <!--                            </div>-->
+                    <!--                            <label class="col-4 col-form-label">Nilai Pasiva</label>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="form-group kt-form__group row col-12">-->
+                    <!--                            <label class="col-7 col-form-label"></label>-->
+                    <!--                            <div class="col-4">-->
+                    <!--                                <input type="number" id="nilaiPasiva"-->
+                    <!--                                       class="form-control kt-input"/>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="form-group kt-form__group row col-12" hidden>-->
+                    <!--                            <label class="col-7 col-form-label"></label>-->
+                    <!--                            <div class="col-4">-->
+                    <!--                                <input type="text" id="statusOpen"-->
+                    <!--                                       class="form-control kt-input"/>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                        <br>-->
+                    <!--                                            <div class="form-group kt-form__group row col-12 .offset-11">-->
+                    <!--                                                <label class="col-7 col-form-label"></label>-->
+                    <!--                                                <div class="col-4">-->
+                    <!--                                                    <button type="button" class="btn btn-secondary" id="btnBatal">Batal</button>-->
+                    <!--                                                    <button type="button" class="btn btn-primary" id="btnSimpan">Open</button>-->
+                    <!--                                                </div>-->
+                    <!--                                            </div>-->
+                    <!--                    </div>-->
+                </div>
+                <div class="kt-portlet__foot">
+                    <button type="button" class="btn btn-secondary" id="btnBatal">Batal</button>
+                    <button type="button" class="btn btn-primary" id="btnSimpan">Buka</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<section layout:fragment="custom-script">
+    <script th:src="@{/vendors/cleave.js}" type="text/javascript"></script>
+    <script th:src="@{/metronic/plugins/custom/datatables/datatables.bundle.js}" type="text/javascript"></script>
+    <script th:src="@{/vendors/pace-1.0.2/pace.js}" type="text/javascript"></script>
+    <script th:src="@{/js/transaksi/bukaSistem.js}" type="text/javascript"></script>
+    <script type="text/javascript" th:src="@{/vendors/numeraljs/numeral.min.js}"></script>
+</section>
+</body>
+</html>

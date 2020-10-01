@@ -1,0 +1,121 @@
+<html lang="en">
+<!-- begin::Head -->
+<head>
+    <meta charset="utf-8" />
+    <title>DAPENBI | Login</title>
+    <meta name="description" content="Latest updates and statistic charts">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+    <!--end::Web font -->
+    <!--begin::Base Styles -->
+    <link th:href="@{/metronic/css/pages/login/login-5.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/metronic/plugins/global/plugins.bundle.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/metronic/css/style.bundle.css}" rel="stylesheet" type="text/css" />
+    <!--end::Base Styles -->
+    <!--begin::Layout Skins(used by all pages) -->
+    <link th:href="@{/metronic/css/skins/header/base/light.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/metronic/css/skins/header/menu/light.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/metronic/css/skins/brand/dark.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/metronic/css/skins/aside/dark.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/custom_css/custom_login.css}" rel="stylesheet" type="text/css" />
+    <link rel="icon" th:href="@{/images/login_icon.svg}"/>
+    
+    <!--end::Layout Skins -->
+</head>
+<!-- end::Head -->
+<body  class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--transparent kt-aside--enabled kt-aside--fixed kt-aside--minimize kt-page--loading"  >
+    <!-- begin:: Page -->
+    <div class="kt-grid kt-grid--ver kt-grid--root kt-page">
+        <div class="kt-grid kt-grid--hor kt-grid--root  kt-login kt-login--v5 kt-login--signin" id="kt_login">
+            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--desktop kt-grid--ver-desktop kt-grid--hor-tablet-and-mobile" style="background-image: url(/metronic/themes/metronic/theme/default/demo7/dist/assets/media/bg/bg-3.jpg);">
+                <div class="kt-login__left">
+                    <div class="kt-login__wrapper">
+                        <div class="kt-login__content">
+                            <div class="kt-login__logo">
+                                <img th:src="@{/images/logo.svg}" />
+                            </div>
+                            <h3 class="kt-login__title">SA Akunting</h3>
+                            <span class="kt-login__desc">
+                            Sistem Aplikasi Akunting
+                        </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-login__divider">
+                    <div></div>
+                </div>
+                <div class="kt-login__right">
+                    <div class="kt-login__wrapper">
+                        <div class="kt-login__signin">
+                            <div class="kt-login__head">
+                                <h3 class="kt-login__title">Login </h3>
+                                <p>Silahkan login dengan akun dan pasword yang anda miliki!</p>
+                            </div>
+                            <div class="kt-login__signin">
+                                <form class="kt-login__form kt-form" method="post" th:action="@{/login}">
+                                    <div class="kt-input-icon kt-input-icon--left">
+                                        <input class="form-control kt-input" type="text" placeholder="Username" name="username" autocomplete="off" required>
+                                        <input type="hidden" name="returnUrl" id="returnUrl" />
+                                        <span class="kt-input-icon__icon kt-input-icon__icon--left">
+                                            <span><i class="icon_username"></i></span>
+                                        </span>
+                                    </div>
+                                    <div class="kt-input-icon kt-input-icon--left">
+                                        <input class="form-control kt-input kt-login__form-input--last" type="password" placeholder="Password" name="password" required>
+                                        <span class="kt-input-icon__icon kt-input-icon__icon--left">
+                                            <span><i class="icon_password"></i></span>
+                                        </span>
+                                    </div>
+                                    <div class="kt-login__actions">
+                                        <button id="m_login_signin_submit" type="submit" class="btn btn-brand btn-pill btn-elevate">Sign In</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="kt-login__account">
+                                <span class="kt-login__account-msg" id="lblErrorLogin" style="color:red !important;">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end:: Page -->
+    <script>
+        var KTAppOptions = {
+            "colors": {
+                "state": {
+                    "brand": "#5d78ff",
+                    "dark": "#282a3c",
+                    "light": "#ffffff",
+                    "primary": "#5867dd",
+                    "success": "#34bfa3",
+                    "info": "#36a3f7",
+                    "warning": "#ffb822",
+                    "danger": "#fd3995"
+                },
+                "base": {
+                    "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                    "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                }
+            }
+        };
+    </script>
+    <!--begin::Base Scripts -->
+    <script th:src="@{/metronic/plugins/global/plugins.bundle.js}" type="text/javascript"></script>
+    <script th:src="@{/metronic/js/scripts.bundle.js}" type="text/javascript"></script>
+    <script th:src="@{/custom_js/common.js}" type="text/javascript"></script>
+    <script>
+        jQuery(document).ready(function () {
+            var error = getUrlParameter("error");
+            
+            if(error){
+                $('#lblErrorLogin').html("Login Failure! Wrong username or password");
+            }
+        });
+    </script>
+    <!--end::Base Scripts -->
+</body>
+<!-- end::Body -->
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
+<head>
+    <title>Validasi Budget Review</title>
+    <meta layout:fragment="custom-style">
+    <link rel="stylesheet" th:href="@{/metronic/plugins/custom/datatables/datatables.bundle.css}"/>
+    <link rel="stylesheet" th:href="@{/vendors/pace-1.0.2/themes/purple/pace-theme-flat-top.css}"/>
+    </meta>
+    <style>
+        table.dataTable tbody > tr td {
+            cursor: pointer;
+        }
+
+        .input-group-text {
+            height: 28px;
+        }
+
+        .table-empty {
+            background-color: #f0f0f0;
+        }
+
+        button.align-bottom {
+            position: absolute;
+            bottom: 0;
+        }
+
+        .textCurrency {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="custom-content">
+    <div
+            class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+        <!--begin::Portlet-->
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">Validasi Budget Review</h3>
+                </div>
+            </div>
+            <div class="kt-form">
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="tblBudgetReview" class="display table table-bordered table-striped dataTable"
+                                   width="100%" cellspacing="0">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BUDGET REVIEW DIALOG-->
+    <div class="modal fade" id="budgetReviewDialog" tabindex="-1" role="dialog"
+         aria-labelledby="parameterFormDialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+            <form>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="budgetReviewModalLabel">Budget Review</h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="kt-portlet">
+                            <div class="kt-form">
+                                <div class="kt-portlet__body">
+                                    <div id="form" class="pb-4">
+                                        <form id="budgetReviewForm">
+                                            <div class="kt-form kt-form--fit">
+                                                <div class="form-group kt-form__group row">
+                                                    <label class="col-2 col-form-label">No Budget Review</label>
+                                                    <div class="col-2">
+                                                        <input type="text" readonly id="txtNoBudgetReview"
+                                                               class="form-control kt-input"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group kt-form__group row">
+                                                    <div class="col-2"><label class="col-form-label">Tanggal</label>
+                                                    </div>
+                                                    <div class="input-group date col-2 datepicker-group">
+                                                        <input type="text" readonly class="form-control"
+                                                               id="txtCreatedDate"
+                                                               placeholder="yyyy-mm-dd"
+                                                               style="height: 29px !important;">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text"><i
+                                                                    class="fa fa-calendar"></i></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-1"><label class="col-form-label">Periode</label>
+                                                    </div>
+                                                    <div class="col-1">
+                                                        <input type="text" readonly id="txtKodePeriode"
+                                                               class="form-control kt-input"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group kt-form__group row">
+                                                    <div class="col-2"><label class="col-form-label">Tahun buku</label>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <div class="col-6 p-0 m-0">
+                                                            <input type="text" readonly id="txtKodeThnBuku"
+                                                                   class="form-control kt-input"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-1"><label class="col-form-label">Triwulan</label>
+                                                    </div>
+                                                    <div class="col-1">
+                                                        <input type="text" readonly id="txtTriwulan"
+                                                               class="form-control kt-input"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group kt-form__group row">
+                                                    <label class="col-2 col-form-label">Keterangan</label>
+                                                    <div class="col-4">
+                                                        <textarea rows="3" cols="100" readonly id="txtKeterangan"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="pt-4 pb-4">
+                                            <hr>
+                                        </div>
+                                        <div class="kt-form kt-form--fit">
+                                            <table id="tableRekening" class="table table-sm" style="width:100%;">
+                                                <thead>
+                                                <tr>
+                                                    <th style="width: 10%">Nomor</th>
+                                                    <th style="width: 15%">Rekening</th>
+                                                    <th style="width: 20%">Anggaran</th>
+                                                    <th style="width: 20%">Realisasi</th>
+                                                    <th style="width: 5%">%</th>
+                                                    <th style="width: 10%">Saldo</th>
+                                                    <th style="width: 20%">Keterangan</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="tbody-detail">
+                                                <tr style="background-color: #f0f0f0">
+                                                    <td colspan="7" class="text-center">Tidak ada data
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-tolak" data-toggle="modal"
+                                id="btnTolakBudgetReview"
+                                data-target="#catatanTolakDialog">
+                            <i data-dismiss="modal" class="fa fa-times"></i>&nbsp;Tolak
+                        </button>
+                        <button type="button" class="btn btn-success btn-submit" id="btnSetujuiBudgetReview"
+                                onclick="updateStatusBudgetReview('VALID')">
+                            <i class="la la-check"></i>&nbsp;Setujui
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--BudgetReview DIALOG-->
+
+
+    <!-- TOLAK WARKAT DIALOG-->
+    <div class="modal fade" id="catatanTolakDialog" tabindex="-1" role="dialog"
+         aria-labelledby="parameterFormDialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-md" role="document">
+            <form>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="catatanTolakModalLabel">Catatan<sup style="color: red">*</sup></h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="catatanForm">
+                            <div class="col-12">
+                                <textarea id="txtCatatanValidasi" style="height: 100px;width: 100%;"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-tolakWarkat" id="btnTolak"
+                                onclick="updateStatusBudgetReview('REJECT')">Tolak
+                        </button>&nbsp;
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--WARKAT DIALOG-->
+
+</section>
+<section layout:fragment="custom-script">
+    <script th:src="@{/metronic/plugins/custom/datatables/datatables.bundle.js}" type="text/javascript"></script>
+    <script type="text/javascript" th:src="@{/vendors/numeraljs/numeral.min.js}"></script>
+    <script th:src="@{/vendors/momentjs/moment-with-locales.min.js}" type="text/javascript"></script>
+    <script th:src="@{/vendors/pace-1.0.2/pace.js}" type="text/javascript"></script>
+    <script th:src="@{/js/transaksi/validasiBudgetReview.js}" type="text/javascript"></script>
+</section>
+</body>
+</html>

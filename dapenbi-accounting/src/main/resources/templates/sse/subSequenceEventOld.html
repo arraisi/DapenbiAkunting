@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
+<head>
+    <title>Sub Sequence Event</title>
+    <link rel="stylesheet" th:href="@{/metronic/plugins/custom/datatables/datatables.bundle.css}"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/css/jqx.base.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/styles/jqx.light.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/css/img.css}"/>
+    <link rel="stylesheet" th:href="@{/vendors/pace-1.0.2/themes/purple/pace-theme-flat-top.css}"/>
+    <style>
+        table.dataTable tbody > tr td {
+            cursor: pointer;
+        }
+
+        .input-group-text {
+            height: 28px;
+        }
+
+        .table-empty {
+            background-color: #f0f0f0;
+        }
+
+        button.align-bottom {
+            position: absolute;
+            bottom: 0;
+        }
+
+        .textCurrency {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="custom-content">
+    <!-- PAGE/PACE LOADER-->
+    <div class="pace-loader"></div>
+
+    <div class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+        <!--begin::Portlet-->
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">Sub Sequence Event</h3>
+                </div>
+            </div>
+            <div class="kt-form">
+                <div class="kt-portlet__body">
+                    <div class="row pb-2">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-brand btn-sm btn-primary" id="tambahDataBtn"
+                                    onclick="tambahDataBtnPressed()">
+                                <i class="fa fa-plus"></i><span>&nbsp;Tambah data</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="saldoWarkatDataTable"
+                                   class="display table table-bordered table-striped dataTable"
+                                   width="100%" cellspacing="0">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUB SEQUENCE DIALOG-->
+    <div class="modal fade" id="subSequenceEventDialog" tabindex="-1" role="dialog"
+         aria-labelledby="parameterFormDialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+            <form>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="subSequenceEventDialogLabel">Sub Sequence Event</h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="kt-portlet">
+                            <div class="kt-form">
+                                <div class="kt-portlet__body">
+                                    <div id="form" class="pb-4">
+                                        <form id="subSequenceEventForm">
+                                            <!--FORM WARKAT-->
+                                            <div class="kt-form kt-form--fit">
+
+                                                <div class="form-group kt-form__group row form-parent pb-2">
+                                                    <!--JENIS TRANSAKSI-->
+                                                    <div class="col-2 pr-0" style="width:content-box">
+                                                        <label class="p-0 col-form-label">Jenis Transaksi</label>
+                                                    </div>
+                                                    <div class="input-group col-3">
+                                                        <input type="text" id="txtJenisTransaksi"
+                                                               class="form-control kt-input"
+                                                               placeholder="Jenis Transaksi" readonly/>
+                                                        <div class="input-group-append">
+                                                            <button type="button"
+                                                                    class="input-group-text btn btn-secondary"
+                                                                    onclick="showJenisTransaksiDialog()">
+                                                                <i class="fa fa-search"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <!--JENIS WARKAT-->
+                                                    <div class="col-1 pr-0"
+                                                         style="width:content-box">
+                                                        <label class="p-0 col-form-label">Jenis Warkat</label>
+                                                    </div>
+                                                    <div class="col-3 pl-0">
+                                                        <select class="form-control pt-0 pb-0 kt-input custom-select"
+                                                                id="txtJenisWarkat">
+                                                            <option value="" disabled selected>Select your option
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group kt-form__group noWarkat row">
+                                                    <label class="col-2 col-form-label">No Warkat</label>
+                                                    <div class="col-2">
+                                                        <input type="text" id="txtNoWarkat"
+                                                               class="form-control kt-input"/>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group kt-form__group row form-parent pb-2">
+                                                    <!--JTANGGAL TRANSAKSI-->
+                                                    <div class="col-2 pr-0" style="width:content-box">
+                                                        <label class="p-0 col-form-label">Tgl. Transaksi</label>
+                                                    </div>
+                                                    <div class="input-group date col-2 datepicker-group"
+                                                         data-provide="datepicker">
+                                                        <input type="text" class="form-control" id="txtTglTransaksi"
+                                                               placeholder="yyyy-mm-dd">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text">
+                                                                <i class="fa fa-calendar"></i></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-1" style="width:content-box">
+                                                    </div>
+                                                    <!--TANGGAL BUKU-->
+                                                    <div class="col-1 pr-0"
+                                                         style="width:content-box">
+                                                        <label class="p-0 col-form-label">Tgl. Buku</label>
+                                                    </div>
+                                                    <div class="input-group date col-2 pl-0 datepicker-group"
+                                                         data-provide="datepicker">
+                                                        <input type="text" class="form-control" id="txtTglBuku"
+                                                               placeholder="yyyy-mm-dd">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text"><i
+                                                                    class="fa fa-calendar"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group kt-form__group row">
+                                                    <label class="col-2 col-form-label">Total Transaksi</label>
+                                                    <div class="col-3">
+                                                        <input type="text" readonly id="txtTotalTransaksi"
+                                                               class="form-control kt-input textCurrency"
+                                                               placeholder="Total Transaksi"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group kt-form__group row">
+                                                    <label class="col-2 col-form-label">Keterangan</label>
+                                                    <div class="col-4">
+                                                        <textarea id="txtKeterangan" rows="3" cols="45"
+                                                                  placeholder="Keterangan"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group kt-form__group row" style="display: none">
+                                                    <label class="col-2 col-form-label">Tahun Buku</label>
+                                                    <div class="col-6">
+                                                        <input type="text" id="txtTahunBuku"
+                                                               class="form-control kt-input"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="pt-4 pb-4">
+                                                <hr>
+                                            </div>
+
+                                            <!--BUTTON TAMBAH JURNAL-->
+                                            <div class="row pb-3">
+                                                <div class="col-md-12">
+                                                    <button type="button" class="btn btn-sm btn-primary"
+                                                            id="tambahJurnalBtn"
+                                                            onclick="displayTambahJurnalForm('show')">
+                                                        <i class="fa fa-plus"></i>&nbsp;Tambah Jurnal
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <!--FORM TAMBAH JURNAL-->
+                                            <div id="tambahJurnalForm" style="display:none;" class="pb-4">
+                                                <form id="transaksiJurnal">
+                                                    <div class="kt-form kt-form--fit">
+                                                        <div class="row">
+                                                            <div class="col-1 form-group kt-form__group">
+                                                                <label class="col-form-label">Urutan</label>
+                                                                <input type="number" min="1" id="txtUrutanTambahJurnal"
+                                                                       class="form-control kt-input"
+                                                                       placeholder="Urutan"/>
+                                                            </div>
+                                                            <div hidden class="form-group kt-form__group">
+                                                                <label class="col-form-label">Id Rekening</label>
+                                                                <input type="text" readonly
+                                                                       id="txtIdRekeningTambahJurnal"
+                                                                       class="form-control kt-input"/>
+                                                            </div>
+                                                            <div class="col-2 form-group kt-form__group pl-0">
+                                                                <label class="col-form-label">Kode Rekening</label>
+                                                                <input type="text" disabled placeholder="Kode"
+                                                                       id="txtKodeRekeningTambahJurnal"
+                                                                       class="form-control kt-input"/>
+                                                            </div>
+                                                            <div class="col-4 form-group kt-form__group pl-0">
+                                                                <label class="col-form-label">Nama Rekening</label>
+                                                                <div class="input-group pl-0">
+                                                                    <input type="text" disabled
+                                                                           id="txtNamaRekeningTambahJurnal"
+                                                                           placeholder="Rekening"
+                                                                           class="form-control kt-input"/>
+                                                                    <div class="input-group-append">
+                                                                        <button type="button"
+                                                                                class="input-group-text btn btn-secondary"
+                                                                                onclick="showRekeningDialog()">
+                                                                            <i class="fa fa-search"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="row col-2">
+                                                                <div class="col-3 p-0">
+                                                                    <button type="button"
+                                                                            class="btn btn-primary align-bottom"
+                                                                            id="tambahkanJurnalBtn"
+                                                                            onclick="tambahkanJurnalBtnPressed()">
+                                                                        <i class="fa fa-plus p-1"></i>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="col-6 p-0">
+                                                                    <button type="button"
+                                                                            class="btn btn-secondary align-bottom"
+                                                                            id="hideTambahJurnalFormBtn"
+                                                                            onclick="hideFormJurnalBtnPressed()">
+                                                                        <i class="fa fa-times p-1"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <div>
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                            <!--FORM TAMBAH JURNAL-->
+
+                                            <div class="kt-form kt-form--fit">
+                                                <table id="tableJurnal" class="table table-sm table-bordered"
+                                                       style="width:100%;">
+                                                    <thead>
+                                                    <tr>
+                                                        <th style="width: 5%" class="text-center">URUTAN</th>
+                                                        <th hidden>ID REKENING</th>
+                                                        <th style="width: 10%">KODE REKENING</th>
+                                                        <th style="width: 25%">NAMA REKENING</th>
+                                                        <th style="width: 25%">DEBIT</th>
+                                                        <th style="width: 25%">KREDIT</th>
+                                                        <th style="width: 10%">TINDAKAN</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="tbody-jurnal">
+                                                    <tr class="table-empty" style="height: 31px">
+                                                        <td colspan="6" class="text-center">Tidak ada data
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="pt-4 pb-4">
+                                                <hr>
+                                            </div>
+
+                                            <div class="form-group kt-form__group row">
+                                                <label class="col-2 col-form-label"><strong>Total Debit</strong></label>
+                                                <div class="col-4">
+                                                    <input type="text" id="txtTotalDebit" placeholder="0"
+                                                           class="form-control kt-input textCurrency" readonly/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group kt-form__group row">
+                                                <label class="col-2 col-form-label"><strong>Total
+                                                    Kredit</strong></label>
+                                                <div class="col-4">
+                                                    <input type="text" id="txtTotalKredit" placeholder="0"
+                                                           class="form-control kt-input textCurrency" readonly/>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-simpan" id="simpanWarkatBtn"
+                                onclick="saveWarkatAndJurnals('DRAFT')"><i
+                                data-dismiss="modal" class="fa fa-file"></i>&nbsp;Simpan
+                        </button>&nbsp;
+                        <button type="button" class="btn btn-primary btn-submit" id="submitWarkatBtn"
+                                onclick="saveWarkatAndJurnals('SUBMIT')"><i
+                                data-dismiss="modal" class="fa fa-save"></i>&nbsp;Submit
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--TRANSAKSI DIALOG-->
+    <div class="modal fade" id="jenisTransaksiDialog" tabindex="-1" role="dialog"
+         aria-labelledby="parameterFormDialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+            <form>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="jenisTransaksiDialogLabel">Jenis Transaksi</h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12">
+                            <table id="jenisTransaksiDatatable"
+                                   class="display table table-bordered table-striped dataTable"
+                                   width="100%" cellspacing="0">
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-simpan"
+                                data-dismiss="modal" id="pilihJenisTransaksiBtn">Selesai
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--TRANSAKSI DIALOG-->
+
+    <!--REKENING DIALOG-->
+    <div class="modal fade" id="rekeningDialog" tabindex="-1" role="dialog"
+         aria-labelledby="parameterFormDialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+            <form>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="rekeningModalLabel">Rekening</h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12">
+                            <div class="form-group pb-4">
+                                <form id="rekening">
+                                    <div class="kt-form kt-form--fit">
+                                        <div class="row">
+                                            <div class="col-1 form-group kt-form__group">
+                                                <label class="col-form-label">Urutan</label>
+                                                <input type="number" min="1" id="txtNoUrut"
+                                                       class="form-control kt-input"
+                                                       placeholder="Urutan"/>
+                                            </div>
+                                            <div class="col-2 form-group kt-form__group pl-0">
+                                                <label class="col-form-label">Debit / Kredit</label>
+                                                <select class="form-control pt-0 pb-0 kt-input custom-select"
+                                                        id="txtSaldoNormal">
+                                                    <option disabled selected value="">Select menu</option>
+                                                    <option value="D">D -> Debit</option>
+                                                    <option value="K">K -> Kredit</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-1 form-group kt-form__group" hidden>
+                                                <label class="col-form-label">Kode Rekening</label>
+                                                <input type="text" id="txtKodeRekening" class="form-control kt-input" />
+                                            </div>
+                                            <div class="col-4 form-group kt-form__group">
+                                                <label class="col-form-label">Nama Rekening</label>
+                                                <input type="text" id="txtNamaRekening" class="form-control kt-input"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-8 pb-2">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" id="expandAllRekeningBtn" class="btn btn-secondary">Expands all
+                                    rows
+                                </button>
+                                <button type="button" id="collapseAllRekeningBtn" class="btn btn-secondary">Collapse all
+                                    rows
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div id="treeGridRekening" style="width: 100%">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-simpan" id="pilihRekeningBtn"
+                                onclick="pilihRekeningBtnPressed()">Pilih
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--REKENING DIALOG-->
+
+</section>
+
+<section layout:fragment="custom-script">
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqx-all.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/format.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/demofunctions.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqxcore.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqxdata.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqxlistbox.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqxdropdownlist.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqxtabs.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqxmenu.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqxbuttons.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqxscrollbar.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqxdatatable.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/jqwidgets-ver9/js/jqxtreegrid.js}"></script>
+    <script th:src="@{/metronic/plugins/custom/datatables/datatables.bundle.js}" type="text/javascript"></script>
+    <script type="text/javascript" th:src="@{/vendors/numeraljs/numeral.min.js}"></script>
+    <script th:src="@{/vendors/pace-1.0.2/pace.js}" type="text/javascript"></script>
+    <script th:src="@{/js/sse/subSequenceEventOld.js}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $('#txtUrutanTambahJurnal').keyup(function () {
+            const noUrut = $(this).val();
+            var jurnal = _jurnals.find(tree => tree.noUrut === parseInt(noUrut));
+            console.log(jurnal);
+            if (jurnal !== undefined) {
+                showWarning("No. urut tidak boleh sama.");
+                $(this).val('');
+                return;
+            }
+        })
+    </script>
+</section>
+</body>
+</html>

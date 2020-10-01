@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
+<head>
+    <title>Penyusunan Anggaran Akunting</title>
+    <link rel="stylesheet" th:href="@{/metronic/plugins/custom/datatables/datatables.bundle.css}"/>
+    <link rel="stylesheet" th:href="@{/vendors/pace-1.0.2/themes/purple/pace-theme-flat-top.css}"/>
+    <style>
+        table.dataTable tbody > tr td {
+            cursor: pointer;
+        }
+
+        .input-group-text {
+            height: 28px;
+        }
+
+        .table-empty {
+            background-color: #f0f0f0;
+        }
+
+        button.align-bottom {
+            position: absolute;
+            bottom: 0;
+        }
+
+        .textCurrency {
+            text-align: right;
+        }
+
+        .rowApprove td {
+            background-color: #cbffa8;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .pdfobject-container {
+            height: 90vh;
+            width: 100%;
+            border: 1rem solid rgba(0,0,0,.1);
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="custom-content">
+    <!-- PAGE/PACE LOADER-->
+    <div class="pace-loader"></div>
+
+    <div class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+        <!--begin::Portlet-->
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">Penyusunan Anggaran</h3>
+                </div>
+            </div>
+            <div class="kt-form">
+                <div class="kt-portlet__body">
+                    <div class="row pb-2">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-brand btn-sm btn-primary" id="tambahDataBtn"
+                                    onclick="tambahDataBtnPressed()">
+                                <i class="fa fa-plus"></i><span>&nbsp;Tambah data</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="budgetReviewDatatable"
+                                   class="display table table-bordered table-striped dataTable"
+                                   width="100%" cellspacing="0">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BUDGET REVIEW DIALOG-->
+    <div class="modal fade" id="budgetReviewDialog" tabindex="-1" role="dialog"
+         aria-labelledby="parameterFormDialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+            <form>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="budgetReviewModalLabel">Anggaran Tahunan</h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="kt-portlet">
+                            <div class="kt-form">
+                                <div class="kt-portlet__body">
+                                    <div id="form" class="pb-4">
+                                        <form id="budgetReviewForm">
+                                            <div class="kt-form kt-form--fit">
+                                                <div class="form-group kt-form__group row" hidden>
+                                                    <label class="col-2 col-form-label">No Budget Review</label>
+                                                    <div class="col-2">
+                                                        <input type="text" readonly id="txtNoAnggaran"
+                                                               class="form-control kt-input"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group kt-form__group row pt-1">
+                                                    <label class="col-2 col-form-label">Tahun Buku</label>
+                                                    <div class="col-3">
+                                                        <select class="form-control selectpicker" id="idTahunBuku" data-live-search="true">
+                                                            <option th:each="tahunBuku : ${listTahunBuku}" th:value="${tahunBuku.kodeTahunBuku}" th:text="${tahunBuku.namaTahunBuku}"></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+<!--                                                <div class="form-group kt-form__group row">-->
+<!--                                                    <div class="col-1"><label class="col-form-label">Triwulan</label>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="col-1">-->
+<!--                                                        <input type="text" readonly id="txtTriwulan"-->
+<!--                                                               class="form-control kt-input"/>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="col-1"><label class="col-form-label">Periode</label>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="col-2">-->
+<!--                                                        <input type="text" readonly id="txtKodePeriode"-->
+<!--                                                               class="form-control kt-input"/>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+                                                <div class="form-group kt-form__group row pt-1">
+                                                    <label class="col-2 col-form-label">Periode</label>
+                                                    <div class="col-3">
+                                                        <select class="form-control selectpicker" id="idPeriode" data-live-search="true">
+                                                            <option th:each="periode : ${listPeriode}" th:value="${periode.kodePeriode}" th:text="${periode.namaPeriode}"></option>
+                                                        </select>
+                                                    </div>
+<!--                                                    <div class="col-2"><label class="col-form-label">Tahun buku</label>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="col-2">-->
+<!--                                                        <div class="col-6 p-0 m-0">-->
+<!--                                                            <input type="text" readonly id="txtKodeThnBuku"-->
+<!--                                                                   class="form-control kt-input"/>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="col-2"><label class="col-form-label">Tanggal</label>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="input-group date col-2 datepicker-group"-->
+<!--                                                         data-provide="datepicker">-->
+<!--                                                        <input type="text" readonly class="form-control"-->
+<!--                                                               id="txtCreatedDate"-->
+<!--                                                               placeholder="yyyy-mm-dd"-->
+<!--                                                               style="height: 29px !important;">-->
+<!--                                                        <div class="input-group-append">-->
+<!--                                                            <span class="input-group-text"><i-->
+<!--                                                                    class="fa fa-calendar"></i></span>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+                                                </div>
+                                                <div class="form-group kt-form__group row pt-1">
+                                                    <label class="col-2 col-form-label pt-1">Keterangan</label>
+                                                    <div class="col-8 pt-1">
+                                                        <textarea id="txtKeterangan" rows="3" cols="62"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <div class="pt-4 pb-4 edit-section">
+                                            <hr>
+                                        </div>
+
+                                        <!--FORM TAMBAH DETAIL BUDGET/REKENING-->
+                                        <div class="row pb-2 edit-section">
+                                            <div class="col-md-12">
+                                                <button type="button" class="btn btn-sm btn-success"
+                                                        id="dapatkanDataBtn" onclick="dapatkanDataBtnPressed()">Dapatkan
+                                                    data
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!--FORM TAMBAH REKENING-->
+                                        <div id="formRekening" style="display:none;" class="border rounded">
+                                            <form id="budgetDetail" class="m-2 p-2">
+                                                <div class="kt-form kt-form--fit">
+                                                    <div class="form-row">
+                                                        <div class="col-md-1 mb-3">
+                                                            <label for="txtNomor">Nomor</label>
+                                                            <input type="text" class="form-control" readonly
+                                                                   id="txtNomor"
+                                                                   placeholder="Nomor">
+                                                        </div>
+                                                        <div hidden class="form-group kt-form__group">
+                                                            <input type="text" id="txtIdRekening"
+                                                                   class="form-control kt-input"/>
+                                                        </div>
+                                                        <div class="col-md-6 mb-3">
+                                                            <label for="txtRekening">Rekening</label>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" id="txtRekening"
+                                                                       placeholder="Rekening" readonly
+                                                                       aria-label="Rekening">
+                                                                <div class="input-group-append">
+                                                                    <button class="btn btn-outline-secondary p-0"
+                                                                            type="button"
+                                                                            onclick="showRekeningDatatables()"><i
+                                                                            class="fa fa-search p-1 pr-2 pl-2"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-5 mb-3">
+                                                            <label for="txtAnggaran">Anggaran</label>
+                                                            <input type="text" class="form-control text-right"
+                                                                   id="txtAnggaran"
+                                                                   placeholder="Anggaran">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-row">
+                                                        <div class="col-md-4 mb-3">
+                                                            <label for="txtRealisasi">Realisasi</label>
+                                                            <input type="text" class="form-control text-right"
+                                                                   id="txtRealisasi"
+                                                                   placeholder="Realisasi">
+                                                        </div>
+                                                        <div class="col-md-1 mb-3">
+                                                            <label for="txtPersen">Persen</label>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" id="txtPersen"
+                                                                       required>
+                                                                <div class="input-group-append">
+                                                                    <span class="input-group-text"
+                                                                          id="persen-addon">%</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 mb-3">
+                                                            <label for="txtSaldo">Saldo</label>
+                                                            <input type="text" class="form-control text-right"
+                                                                   id="txtSaldo"
+                                                                   placeholder="Saldo">
+                                                        </div>
+                                                        <div class="col-md-3 mb-3">
+                                                            <label for="txtKeteranganDetail">Keterangan</label>
+                                                            <input type="text" class="form-control"
+                                                                   id="txtKeteranganDetail"
+                                                                   placeholder="Keterangan">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-row">
+                                                        <div class="col-auto">
+                                                            <button class="btn btn-primary" id="simpanRekeningBtn" onclick="simpanRekeningBtnPressed()"
+                                                                    type="button">
+                                                                <i class="fa fa-save"></i>&nbsp;Simpan
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                    style="display:none;"
+                                                                    id="batalEditRekeningBtn" onclick="batalEditRekeningBtnPressed()">
+                                                                <i class="fa fa-times"></i>&nbsp;Batal
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <!--FORM TAMBAH REKENING-->
+
+                                        <div>
+                                            <hr>
+                                        </div>
+
+                                        <div class="kt-form kt-form--fit">
+                                            <table id="tableRekening"
+                                                   class="display table table-bordered table-striped dataTable"
+                                                   style="width:100%;">
+                                                <thead>
+                                                <tr>
+                                                    <th class="text-center align-middle" style="width: 8%">Nomor</th>
+                                                    <th class="text-center align-middle" hidden>ID REKENING</th>
+                                                    <th class="text-center align-middle" style="width: 24%">Rekening</th>
+                                                    <th class="text-center align-middle" style="width: 9%">Anggaran Lalu</th>
+<!--                                                    <th class="text-center align-middle" style="width: 9%">Realisasi</th>-->
+<!--                                                    <th class="text-center align-middle" style="width: 9%">Perkiraan</th>-->
+                                                    <th class="text-center align-middle" style="width: 9%">Total Anggaran</th>
+<!--                                                    <th class="text-center align-middle" style="width: 9%">Proyeksi 1</th>-->
+<!--                                                    <th class="text-center align-middle" style="width: 9%">Proyeksi 2</th>-->
+<!--                                                    <th class="text-center align-middle" style="width: 9%">Keterangan</th>-->
+<!--                                                    <th class="text-center align-middle" style="width: 5%">Tindakan</th>-->
+                                                </tr>
+                                                </thead>
+                                                <tbody id="tbody-detail">
+                                                <tr style="background-color: #f0f0f0">
+                                                    <td colspan="10" class="text-center">Tidak ada data
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="simpanBtn"
+                                onclick="simpanBtnPressed('DRAFT')">Simpan
+                        </button>&nbsp;
+                        <button type="button" class="btn btn-primary" id="submitBtn"
+                                onclick="simpanBtnPressed('SUBMIT')">Submit
+                        </button>
+                        <button type="button" class="btn btn-primary" id="btnBtlAnggaran"
+                                onclick="okBtnPressed()">&nbsp;OK
+                        </button>&nbsp;
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--BudgetReview DIALOG-->
+
+    <!-- Export DIALOG-->
+    <div class="modal fade" id="exportDialog" tabindex="-1" role="dialog"
+         aria-labelledby="parameterFormDialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+            <form>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="tipeRekeingLabel">Pilih Tipe Rekening</h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="height: 200px;">
+<!--                        <div class="kt-portlet">-->
+<!--                            <div class="kt-form">-->
+<!--                                <div class="kt-portlet__body">-->
+                                    <div id="formTipeRekening" class="pb-4">
+                                        <form id="tipeRekeningForm">
+                                            <div class="kt-form kt-form--fit">
+                                                <div class="form-group kt-form__group row pt-1">
+                                                    <label class="col-2 col-form-label">Tipe Rekening</label>
+                                                    <div class="col-3">
+                                                        <select class="form-control selectpicker" id="tipeRekeing" data-live-search="true">
+                                                            <option value="ASET_OPR">Aset Operasional</option>
+                                                            <option value="BIAYA">Biaya</option>
+                                                            <option value="PENDAPATAN">Pendapatan</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="modalExportBtn"
+                                onclick="exportPDF()">Export PDF
+                        </button>&nbsp;
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--export DIALOG-->
+
+    <!--EDIT BUDGET DIALOG-->
+    <div class="modal fade" id="budgetReviewEditDialog" tabindex="-1" role="dialog"
+         aria-labelledby="parameterFormDialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+            <form>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="budgetReviewEditDialogLabel">Keterangan</h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                            <form id="catatanForm">
+                                <div class="col-12">
+                                    <textarea id="txtKeteranganEdit" style="height: 100px;width: 100%;"></textarea>
+                                </div>
+                            </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-simpan"
+                                data-dismiss="modal" id="simpanPerubahanBtn" onclick="simpanPerubahanBtnPressed()">Simpan
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--PDF DIALOG-->
+    <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog"
+         aria-labelledby="parameterFormDialog" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <form>
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div id="example1"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--PDF DIALOG-->
+
+</section>
+
+<section layout:fragment="custom-script">
+    <script th:src="@{/metronic/plugins/custom/datatables/datatables.bundle.js}" type="text/javascript"></script>
+    <script th:src="@{/vendors/pace-1.0.2/pace.js}" type="text/javascript"></script>
+    <script type="text/javascript" th:src="@{/vendors/numeraljs/numeral.min.js}"></script>
+    <script th:src="@{/vendors/momentjs/moment-with-locales.min.js}" type="text/javascript"></script>
+    <script th:inline="javascript" type="text/javascript">
+        var pengaturanSistem = /*[[${pengaturanSistem}]]*/ '';
+    </script>
+    <script th:src="@{/js/anggaran/penyusunanAnggaranAkunting2.js}" type="text/javascript"></script>
+</section>
+</body>
+</html>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
+<head>
+    <title>Grid Perincian Arus Kas</title>
+    <meta layout:fragment="custom-style">
+    <link rel="stylesheet" th:href="@{/metronic/plugins/custom/datatables/datatables.bundle.css}"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/css/jqx.base.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/styles/jqx.light.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/vendors/jqwidgets-ver9/css/img.css}"/>
+    <link rel="stylesheet" th:href="@{/vendors/pace-1.0.2/themes/purple/pace-theme-flat-top.css}"/>
+    </meta>
+    <style>
+        .form-body-row {
+            margin: 0px !important;
+            margin-bottom: 5px !important;
+            height: 29px;
+        }
+
+        .form-body-label {
+            /*width: 50%;*/
+            text-align: right;
+            padding-right: 5px;
+        }
+
+        .form-body-input {
+            width: 50%;
+        }
+
+        .modal-footer {
+            text-align: center;
+        }
+
+        .dropdown-toggle {
+            border-color: #ced4da !important;
+        }
+
+        #tblArusKasRincian_processing {
+            margin-top: 36px;
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="custom-content">
+    <div
+            class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+        <!--begin::Portlet-->
+        <div class="kt-portlet pb-4">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">Master Arus Kas</h3>
+                </div>
+            </div>
+            <div class="kt-form">
+                <div class="kt-portlet__body">
+                    <div class="row pb-3">
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-sm btn-primary" id="addButtonArusKas"
+                                    data-toggle="modal"
+                                    data-target="#add-form-arus-kas" data-backdrop="static" data-keyboard="false">
+                                <i class="fa fa-plus"></i><span>&nbsp;Tambah Data</span>
+                            </button>
+                        </div>
+<!--                        <div class="col-md-6 text-right">-->
+<!--                            <button type="button" class="btn btn-danger" id="export-pdf" onclick="exportPdf()">PDF-->
+<!--                            </button>-->
+<!--                        </div>-->
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered table-striped dataTable" id="tblArusKas"
+                                   width="100%"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--begin::Portlet-->
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">Perincian Arus Kas</h3>
+                </div>
+            </div>
+            <div class="kt-form">
+                <div class="kt-portlet__body">
+                    <div class="row pb-3">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-sm btn-primary" id="addButtonArusKasRincian">
+                                <i class="fa fa-plus"></i><span>&nbsp;Tambah Data</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered table-striped dataTable" id="tblArusKasRincian"
+                                   width="100%"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="add-form-arus-kas" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Arus Kas</h5>
+                    <input id="statusModalArusKas" type="text" style="display: none">
+                </div>
+                <div class="modal-body">
+                    <div class="form-body">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label text-right">Jenis
+                                Aktivitas:</label>
+                            <div class="col-sm-4">
+                                <select class="form-control selectpicker" id="txtJenisAktivitas"
+                                        data-live-search="true">
+                                    <option value="" disabled selected>Aktivitas</option>
+                                    <option th:each="value : ${aktivitasList}"
+                                            th:value="${value.kodeLookUp}"
+                                            th:text="${value.namaLookUp}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="kodeArusKas" class="col-sm-4 col-form-label text-right">Kode Arus Kas:</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="kodeArusKas">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="keteranganArusKas"
+                                   class="col-sm-4 col-form-label text-right">Keterangan:</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="keteranganArusKas">
+                            </div>
+                        </div>
+                        <div class="form-group" id="statusAktifArusKas">
+                            <label for="statusAktifArusKas" class="col-sm-4 col-form-label text-right">Status
+                                Aktif:</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" name="statusAktifArusKas" type="radio"
+                                       id="status-aktif-ya"
+                                       value="1">
+                                <label class="form-check-label" for="status-aktif-ya">Ya</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" name="statusAktifArusKas" type="radio"
+                                       id="status-aktif-tidak" value="0">
+                                <label class="form-check-label" for="status-aktif-tidak">Tidak</label>
+                            </div>
+                        </div>
+
+                        <div class="row form-body-row" hidden>
+                            <div class="form-body-label">
+                                <label class="col-form-label">Created Date:</label>
+                            </div>
+                            <div class="form-body-input">
+                                <input type="text" class="form-control" id="createdDate">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="justify-content: center">
+                    <button type="button" class="btn btn-sm btn-primary" id="saveArusKasButton">Simpan
+                    </button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal"
+                            id="batalButton">Batal
+                    </button>
+                    <button type="button" class="btn btn-sm btn-secondary" id="detailOk" hidden>OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="add-form-arus-kas-rincian" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Rincian Arus Kas</h5>
+                    <input id="statusModalArusKasRincian" type="text" style="display: none">
+                </div>
+                <div class="modal-body">
+                    <div class="form-body">
+                        <div class="row form-body-row">
+                            <div class="form-body-label" style="width: 30%">
+                                <label class="col-form-label">Kode Rincian:</label>
+                            </div>
+                            <div class="form-body-input row" style="margin: 0px">
+                                <input type="text" class="form-control col-4" id="kodeArusKasRead"
+                                       readonly>
+                                &nbsp;
+                                <input type="text" class="form-control col-4" id="kodeArusKasRincian">
+                            </div>
+                        </div>
+                        <div class="row form-body-row">
+                            <div class="form-body-label" style="width: 30%">
+                                <label class="col-form-label">Rekening:</label>
+                            </div>
+                            <div class="form-body-input">
+                                <!--                                <select class="form-control selectpicker" id="idRekening" data-live-search="true">-->
+                                <!--                                    <option value="">Pilih Rekening</option>-->
+                                <!--                                    <option th:each="rekening : ${rekeningList}" th:style="${rekening.levelRekening} == 6 ? 'color: black' : 'color: grey'" th:disabled="${rekening.levelRekening} != 6" th:value="${rekening.idRekening}" th:text="${rekening.kodeRekening} + ' - ' + ${rekening.namaRekening}"></option>-->
+                                <!--                                </select>-->
+                                <div class="form-group">
+                                    <div class='input-group date' id='rekeningField'>
+                                        <input type="text" id="trueIdRekening" hidden>
+                                        <input type='text' class="form-control" id="idRekening" readonly/>
+                                        <div class="input-group-append">
+                                            <button class="input-group-text" id="rekeningTrigger" data-toggle="modal"
+                                                    data-target="#rekening-form" data-backdrop="static"
+                                                    data-keyboard="false"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-body-row">
+                            <div class="form-body-label" style="width: 30%">
+                                <label class="col-form-label">Keterangan:</label>
+                            </div>
+                            <div class="form-body-input">
+                                <input type="text" class="form-control" id="keteranganArusKasRincian">
+                            </div>
+                        </div>
+                        <div class="row form-body-row">
+                            <div class="form-body-label" style="width: 30%">
+                                <label class="col-form-label">Saldo Awal Tahun:</label>
+                            </div>
+                            <div class="form-body-input">
+                                <input type="text" class="form-control text-right" id="saldoAwalTahun"
+                                       onkeypress="return onlyNumberKey(event)" onkeyup="currencyWhileTyping($(this))">
+                            </div>
+                        </div>
+                        <div class="row form-body-row">
+                            <div class="form-body-label" style="width: 30%">
+                                <label class="col-form-label">Rumus:</label>
+                            </div>
+                            <div class="form-body-input">
+                                <select class="form-control selectpicker" id="flagRumus">
+                                    <option value="">Pilih Rumus</option>
+                                    <option value="A">A - Saldo Awal</option>
+                                    <option value="D">D - Saldo Debet</option>
+                                    <option value="K">K - Saldo Kredit</option>
+                                    <option value="H">H - Saldo Akhir</option>
+                                    <option value="S">S - Saldo Tahun Lalu</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-body-row">
+                            <div class="form-body-label" style="width: 30%">
+                                <label class="col-form-label">Kelompok:</label>
+                            </div>
+                            <div class="form-body-input">
+                                <select class="form-control selectpicker" id="flagGroup">
+                                    <option value="">Pilih Kelompok</option>
+                                    <option value="1">1 - Kelompok 1</option>
+                                    <option value="2">2 - Kelompok 2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-body-row">
+                            <div class="form-body-label" style="width: 30%">
+                                <label class="col-form-label">Status Aktif:</label>
+                            </div>
+                            <div class="form-body-input col-form-label" id="statusAktifArusKasRincian">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" name="statusAktifArusKasRincian" type="radio"
+                                           value="1">
+                                    <label class="form-check-label" for="status-aktif-ya">Ya</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" name="statusAktifArusKasRincian" type="radio"
+                                           value="0">
+                                    <label class="form-check-label" for="status-aktif-tidak">Tidak</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-body-row" hidden>
+                            <div class="form-body-label" style="width: 30%">
+                                <label class="col-form-label">Created Date:</label>
+                            </div>
+                            <div class="form-body-input">
+                                <input type="text" class="form-control" id="createdDateArusKasRincian">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="justify-content: center">
+                    <button type="button" class="btn btn-sm btn-primary" id="saveArusKasRincianButton">
+                        Simpan
+                    </button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal"
+                            id="batalArusKasRincianButton">Batal
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="delete-form-arus-kas" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Delete this data?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="deleteArusKasButton">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="delete-form-arus-kas-rincian" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Delete this data?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="deleteArusKasRincianButton">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade child-modal" id="rekening-form" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Rekening</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-body">
+                        <table class="table table-bordered table-striped dataTable" id="tblRekening"
+                               width="100%"></table>
+                    </div>
+                </div>
+                <div class="modal-footer" style="">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width: 60px"
+                            id="batalRekening">Batal
+                    </button>
+                    <button type="button" class="btn btn-primary" style="" id="pilihRekening">Pilih</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section layout:fragment="custom-script">
+    <script th:src="@{/metronic/plugins/custom/datatables/datatables.bundle.js}" type="text/javascript"></script>
+    <script th:src="@{/vendors/pace-1.0.2/pace.js}" type="text/javascript"></script>
+    <script th:src="@{/js/parameter/arusKas.js}"
+            type="text/javascript">
+    </script>
+</section>
+</body>
+</html>

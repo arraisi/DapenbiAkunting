@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
+<head>
+    <title>Tutup Transaksi Pembukuan Tahunan</title>
+    <meta layout:fragment="custom-style">
+    <link rel="stylesheet"
+          th:href="@{/metronic/plugins/custom/datatables/datatables.bundle.css}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .dot {
+            height: 48px;
+            width: 48px;
+            border-radius: 50%;
+            display: inline-block;
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+        }
+    </style>
+    </meta>
+</head>
+<body>
+<section layout:fragment="custom-content">
+    <div
+            class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+        <!--begin::Portlet-->
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">Tutup Transaksi Pembukuan Tahunan</h3>
+                </div>
+            </div>
+            <div class="kt-form">
+                <div class="kt-portlet__body">
+                    <!--                    UI NEW--> <!--                    NEW-->
+                    <div class="row mb-4">
+                        <div class="col-lg-6">
+                            <div class="card card-stats">
+                                <!-- Card body -->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="card-title text-uppercase text-muted mb-0">Transaksi Warkat
+                                                Pembukuan</h5>
+                                            <span class="h2 font-weight-bold mb-0" id="totalWarkat">0</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="dot" style="background-color: #ed553b;">
+                                                <i class="fa fa-book fa-2x" style="color: white"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="mt-3 mb-0 text-sm">
+                                        <span class="text-success mr-2 tahunBuku">TAHUN BUKU –</span>&nbsp;|&nbsp;
+                                        <span class="text-success mr-2 periode">PERIODE –</span>&nbsp;|&nbsp;
+                                        <span class="text-success tglTransaksi">TRANSAKSI –</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="card card-stats">
+                                <!-- Card body -->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="card-title text-uppercase text-muted mb-0">Validasi WP</h5>
+                                            <span class="h2 font-weight-bold mb-0" id="totalValidasiWP">0</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="dot" style="background-color: #f6d55c;">
+                                                <i class="fa fa-tasks fa-2x" style="color: white"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="mt-3 mb-0 text-sm">
+                                        <span class="text-success mr-2 tahunBuku">TAHUN BUKU –</span>&nbsp;|&nbsp;
+                                        <span class="text-success mr-2 periode">PERIODE –</span>&nbsp;|&nbsp;
+                                        <span class="text-success tglTransaksi">TRANSAKSI –</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-lg-6">
+                            <div class="card card-stats">
+                                <!-- Card body -->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="card-title text-uppercase text-muted mb-0">Validasi Pre Approval
+                                                WP</h5>
+                                            <span class="h2 font-weight-bold mb-0" id="totalPAWP">0</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="dot" style="background-color: #3caea3;">
+                                                <i class="fa fa-tasks fa-2x" style="color: white"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="mt-3 mb-0 text-sm">
+                                        <span class="text-success mr-2 tahunBuku">TAHUN BUKU –</span>|
+                                        <span class="text-success mr-2 periode">PERIODE –</span>|
+                                        <span class="text-success tglTransaksi">TRANSAKSI –</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="card card-stats">
+                                <!-- Card body -->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="card-title text-uppercase text-muted mb-0">Validasi Final
+                                                Approval
+                                                WP</h5>
+                                            <span class="h2 font-weight-bold mb-0" id="totalFAWP">0</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="dot" style="background-color: #20639b;">
+                                                <i class="fa fa-tasks fa-2x" style="color: white"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="mt-3 mb-0 text-sm">
+                                        <span class="text-success mr-2 tahunBuku">TAHUN BUKU –</span>&nbsp;|&nbsp;
+                                        <span class="text-success mr-2 periode">PERIODE –</span>&nbsp;|&nbsp;
+                                        <span class="text-success tglTransaksi">TRANSAKSI –</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-4" style="margin-top: 30px">
+                        <label id="tutupTahunanText"></label>
+                    </div>
+                    <!--                    UI NEW-->
+
+                    <form hidden>
+
+                        <div class="form-group col-4">
+                            <label for="txtTglTransaksi">Tanggal Transaksi</label>
+                            <div class="input-group p-0 m-0 pb-2">
+                                <input type="text" class="form-control" readonly id="txtTglTransaksi"
+                                       placeholder="Tanggal Transaksi"
+                                       style="height: 29px !important;">
+                                <div class="input-group-append">
+                                <span class="input-group-text">
+                                <i class="fa fa-calendar"></i>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <label for="txtKodeThnBuku">Tahun Buku</label>
+                            <input type="text" class="form-control text-right" readonly id="txtKodeThnBuku"
+                                   placeholder="Tahun Buku">
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="txtKodePeriode">Periode</label>
+                            <input type="text" class="form-control text-right" readonly id="txtKodePeriode"
+                                   placeholder="Periode">
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="txtTransaksiWP">Transaksi WP</label>
+                            <input type="text" class="form-control text-right" readonly id="txtTransaksiWP"
+                                   placeholder="Transaksi WP">
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="txtValidasiWP">Validasi WP</label>
+                            <input type="text" class="form-control text-right" readonly id="txtValidasiWP"
+                                   placeholder="Validasi WP">
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="txtValidasiPA">Validasi Pre Approval</label>
+                            <input type="text" class="form-control text-right" readonly id="txtValidasiPA"
+                                   placeholder="Validasi Pre Approval">
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="txtValidasiFA">Validasi Final Approval</label>
+                            <input type="text" class="form-control text-right" readonly id="txtValidasiFA"
+                                   placeholder="Validasi FInal Approval">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="kt-portlet__foot">
+                <button class="btn btn-primary" id="btnPost">
+                    <i class="fa fa-paper-plane" style="color: white"></i> POST
+                </button>
+            </div>
+        </div>
+    </div>
+
+</section>
+<section layout:fragment="custom-script">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script th:src="@{/metronic/plugins/custom/datatables/datatables.bundle.js}" type="text/javascript"></script>
+    <script th:inline="javascript" type="text/javascript">
+        var pengaturanSistem = /*[[${pengaturanSistem}]]*/ '';
+        var totalTransaksiWarkatDRI2 = /*[[${totalTransaksiWarkatDRI2}]]*/ '';
+        var totalTransaksiWarkatDRI3 = /*[[${totalTransaksiWarkatDRI3}]]*/ '';
+        var totalTransaksiSaldoDRI1 = /*[[${totalTransaksiSaldoDRI1}]]*/ '';
+        var totalTransaksiSaldoDRI2 = /*[[${totalTransaksiSaldoDRI2}]]*/ '';
+        var totalTransaksiSaldoDRI3 = /*[[${totalTransaksiSaldoDRI3}]]*/ '';
+        var tahunBuku = /*[[${tahunBuku}]]*/ '';
+        var periode = /*[[${periode}]]*/ '';
+    </script>
+    <script th:src="@{/js/transaksi/tutup-tahunan.js}" type="text/javascript"></script>
+</section>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
+<head>
+    <title>Jurnal Individual</title>
+    <meta layout:fragment="custom-style">
+    <link rel="stylesheet" th:href="@{/metronic/plugins/custom/datatables/datatables.bundle.css}"/>
+    <link rel="stylesheet" th:href="@{/vendors/pace-1.0.2/themes/purple/pace-theme-flat-top.css}"/>
+    </meta>
+    <style>
+        th {
+            text-align: center;
+            padding: 2px;
+            color: #495057;
+        }
+
+        td {
+            padding: 2px;
+            color: #495057;
+        }
+
+        div.dataTables_wrapper div.dataTables_processing {
+            top: 40%;
+        }
+        .loader {
+            display:    none;
+            position:   fixed;
+            z-index:    1000;
+            top:        0;
+            left:       0;
+            height:     100%;
+            width:      100%;
+            background: rgba( 255, 255, 255, .8 )
+            url('/vendors/loader/ajax-loader-2.gif')
+            50% 50%
+            no-repeat;
+        }
+
+        /* When the body has the loading class, we turn
+           the scrollbar off with overflow:hidden */
+        body.loading .loader {
+            overflow: hidden;
+        }
+
+        /* Anytime the body has the loading class, our
+           modal element will be visible */
+        body.loading .loader {
+            display: block;
+        }
+
+        .pdfobject-container {
+            height: 90vh;
+            width: 100%;
+            border: 1rem solid rgba(0,0,0,.1);
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="custom-content">
+    <div class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+        <!--begin::Portlet-->
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">Jurnal Individual</h3>
+                </div>
+            </div>
+            <div class="kt-form">
+                <div class="kt-portlet__body">
+                    <div class="row pb-3">
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div class="col-1">
+                                    <label class="col-form-label">Rekening</label>
+                                </div>
+                                <div class="col-3">
+                                    <select class="form-control selectpicker" id="txtRekening" data-live-search="true" onchange="findJurnalIndividuals()">
+                                        <option value="">All</option>
+                                        <option th:each="rekening : ${rekeningList}"
+                                                th:style="${rekening.levelRekening} == 6 ? 'color: black' : 'color: grey'"
+                                                th:value="${rekening.idRekening}"
+                                                th:text="${rekening.kodeRekening} + ' - ' + ${rekening.namaRekening}"></option>
+                                    </select>
+                                </div>
+                                <div class="col-1">
+                                    <label class="col-form-label">Tanggal</label>
+                                </div>
+                                <div class="col-2">
+                                    <div class='input-group date' id='periodeDatepicker1'>
+                                        <input type='text' class="form-control" id="txtStartDate" readonly/>
+                                        <div class="input-group-append">
+                                            <button class="input-group-text" id="startDateBtn" onclick="datePicker()"><i
+                                                    class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center" style="width: 50px">
+                                    <label class="col-form-label">s/d</label>
+                                </div>
+                                <div class="col-2">
+                                    <div class='input-group date' id='periodeDatepicker2'>
+                                        <input type='text' class="form-control" id="txtEndDate" readonly/>
+                                        <div class="input-group-append">
+                                            <button class="input-group-text" id="endDateBtn" onclick="datePicker()"><i
+                                                    class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <button type="button" class="btn btn-danger" id="export-pdf" onclick="exportPdf()">PDF
+                            </button>
+                            <button type="button" class="btn btn-success" id="export-excel" onclick="exportExcel()">
+                                Excel
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12">
+                            <table class="table-bordered" style="width: 100%">
+                                <thead>
+                                <tr>
+                                    <th rowspan="2" style="width: 5%">NO</th>
+                                    <th rowspan="2" style="width: 10%">TANGGAL</th>
+                                    <th rowspan="2" style="width: 10%">KODE</th>
+                                    <th rowspan="2" style="width: 30%">NAMA</th>
+                                    <th colspan="2" style="width: 40%">MUTASI</th>
+                                    <th rowspan="2" style="width: 5%">NUWP</th>
+                                </tr>
+                                <tr>
+                                    <th>DEBIT</th>
+                                    <th>KREDIT</th>
+                                </tr>
+                                </thead>
+                                <tbody id="jurnalIndividualTbody">
+                                <tr style="background-color: #f0f0f0">
+                                    <td colspan="7" class="text-center">Tidak ada data</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="delete-form" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Delete this data?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="deleteButton">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="loader"><!-- Place at bottom of page --></div>
+
+    <!--PDF DIALOG-->
+    <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog"
+         aria-labelledby="parameterFormDialog" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <form>
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div id="example1"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--PDF DIALOG-->
+</section>
+<section layout:fragment="custom-script">
+    <script type="text/javascript" th:src="@{/vendors/pace-1.0.2/pace.js}"></script>
+    <script type="text/javascript" th:src="@{/vendors/numeraljs/numeral.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/laporan/laporan-keuangan/jurnalIndividual.js}">
+    </script>
+</section>
+</body>
+</html>

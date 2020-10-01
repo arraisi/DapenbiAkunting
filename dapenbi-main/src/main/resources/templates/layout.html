@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- begin::Head -->
+<head>
+<meta charset="utf-8" />
+<title></title>
+<meta content="Latest updates and statistic charts" name="description">
+<meta content="IE=edge" http-equiv="X-UA-Compatible" />
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no"
+	name="viewport" />
+<!--begin::Web font -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script>
+	WebFont.load({
+		google : {
+			"families" : [ "Poppins:300,400,500,600,700",
+					"Roboto:300,400,500,600,700" ]
+		},
+		active : function() {
+			sessionStorage.fonts = true;
+		}
+	});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.1.1/pdfobject.js" integrity="sha512-X6sgTijRHjRCltheFlgnf5Lm4NzCXVgfSNAHjHq4G8R03SBUTUVqFllStaiZflC4mEOtaPGRSWvcd3zFSl7eYg==" crossorigin="anonymous"></script>
+<!--end::Web font -->
+<!--begin::Page Vendors -->
+<link rel="stylesheet"
+	th:href="@{/metronic/plugins/global/plugins.bundle.css}" />
+<link rel="stylesheet" th:href="@{/metronic/css/style.bundle.css}" />
+
+<link th:href="@{/metronic/css/skins/header/base/dark.css}"
+	rel="stylesheet" type="text/css" />
+<link th:href="@{/metronic/css/skins/header/menu/dark.css}"
+	rel="stylesheet" type="text/css" />
+<link th:href="@{/metronic/css/skins/brand/light.css}"
+	rel="stylesheet" type="text/css" />
+<link th:href="@{/metronic/css/skins/aside/light.css}"
+	rel="stylesheet" type="text/css" />
+	
+<link rel="icon" th:href="@{/images/logo.ico}" />
+<meta layout:fragment="custom-style"></meta>
+</meta>
+
+<link th:href="@{/custom_css/custom.css}" rel="stylesheet"
+	type="text/css" />
+</head>
+
+<!-- end::Head -->
+
+<!-- begin::Body -->
+<body
+	class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-aside--enabled kt-aside--fixed kt-aside--minimize kt-page--loading">
+
+	<!-- begin:: Page -->
+
+	<!-- begin:: Header Mobile -->
+	<div id="kt_header_mobile"
+		class="kt-header-mobile  kt-header-mobile--fixed ">
+		<div class="kt-header-mobile__logo">
+			<a href="index&demo=demo6.html"> <img alt="Logo"
+				th:src="@{/images/logo_115.png}" width="30px" height="30px"></a>
+		</div>
+		<div class="kt-header-mobile__toolbar">
+			<div
+				class="kt-header-mobile__toolbar-toggler kt-header-mobile__toolbar-toggler--left"
+				id="kt_aside_mobile_toggler">
+				<span></span>
+			</div>
+			<div class="kt-header-mobile__toolbar-toggler"
+				id="kt_header_mobile_toggler">
+				<span></span>
+			</div>
+			<div class="kt-header-mobile__toolbar-topbar-toggler"
+				id="kt_header_mobile_topbar_toggler">
+				<i class="flaticon-more"></i>
+			</div>
+		</div>
+	</div>
+
+	<!-- end:: Header Mobile -->
+	<div class="kt-grid kt-grid--hor kt-grid--root">
+		<div
+			class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+
+			<!-- begin:: Aside -->
+			<button class="kt-aside-close " id="kt_aside_close_btn">
+				<i class="la la-close"></i>
+			</button>
+			<div
+				class="kt-aside  kt-aside--fixed  kt-grid__item kt-grid kt-grid--desktop kt-grid--hor-desktop"
+				id="kt_aside">
+
+				<!-- begin:: Aside Menu -->
+				<div
+					class="kt-aside-menu-wrapper kt-grid__item kt-grid__item--fluid"
+					id="kt_aside_menu_wrapper">
+					<div id="kt_aside_menu" class="kt-aside-menu "
+						data-ktmenu-vertical="1" data-ktmenu-scroll="1"
+						data-ktmenu-dropdown-timeout="500">
+						<ul class="kt-menu__nav" id="sidebarMenu">
+
+						</ul>
+					</div>
+				</div>
+
+				<!-- end:: Aside Menu -->
+			</div>
+
+			<!-- end:: Aside -->
+			<div
+				class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper"
+				id="kt_wrapper">
+
+				<!-- begin:: Header -->
+				<div id="kt_header"
+					class="kt-header kt-grid kt-grid--ver  kt-header--fixed ">
+
+					<!-- begin:: Aside -->
+					<div class="kt-header__brand kt-grid__item" id="kt_header_brand">
+						<div class="kt-header__brand-logo">
+							<a href="index&demo=demo6.html"> <img alt="Logo"
+								th:src="@{/images/logo_115.png}" width="30px" height="30px">
+							</a>
+						</div>
+					</div>
+
+					<!-- end:: Aside -->
+
+					<!-- begin:: Title -->
+					<h3 class="kt-header__title kt-grid__item">SA Akunting</h3>
+
+					<!-- end:: Title -->
+
+					<!-- begin: Header Menu -->
+					<button class="kt-header-menu-wrapper-close"
+						id="kt_header_menu_mobile_close_btn">
+						<i class="la la-close"></i>
+					</button>
+					<div
+						class="kt-header-menu-wrapper kt-grid__item kt-grid__item--fluid"
+						id="kt_header_menu_wrapper">
+						<div id="kt_header_menu"
+							class="kt-header-menu kt-header-menu-mobile  kt-header-menu--layout-default ">
+							<ul class="kt-menu__nav ">
+								<li
+									class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel kt-menu-text"><span
+									class="  kt-menu__toggle"> <span
+										class="kt-menu__link-text" id="currentPage"></span></span></li>
+							</ul>
+						</div>
+					</div>
+
+					<!-- end: Header Menu -->
+
+					<!-- begin:: Header Topbar -->
+					<div class="kt-header__topbar">
+						<div class="kt-header__topbar-item color-white" style="margin: auto; border-right: 4px solid white;">
+							<span id="latestKodeDRI" style="padding-left: 7px; padding-right: 7px"></span>
+						</div>
+
+						<div class="kt-header__topbar-item color-white" style="margin: auto; border-right: 4px solid white;">
+							<span id="tanggalTransaksiParameter" style="padding-left: 7px; padding-right: 7px"></span>
+						</div>
+
+						<div class="kt-header__topbar-item color-white" style="margin: auto; border-right: 4px solid white;">
+							<span id="statusParameter" style="padding-left: 7px; padding-right: 7px"></span>
+						</div>
+
+						<!--begin: User bar -->
+						<div class="kt-header__topbar-item kt-header__topbar-item--user">
+							<div class="kt-header__topbar-wrapper" data-toggle="dropdown"
+								data-offset="10px,0px">
+								<span class="kt-header__topbar-welcome">Hi,</span> <span
+									class="kt-header__topbar-username kt-hidden-mobile"
+									id="lblUserName"></span> <span
+									class="kt-header__topbar-icon kt-hidden-" id="lblUserInitial"></span>
+							</div>
+							<div
+								class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl"
+								x-placement="top-end"
+								style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(859px, 5px, 0px);">
+								<!--begin: Head -->
+								<div
+									class="kt-user-card kt-user-card--skin-dark kt-notification-item-padding-x"
+									id="cardBackground">
+									<div class="kt-user-card__avatar">
+
+										<!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
+										<span
+											class="kt-badge kt-badge--lg kt-badge--rounded kt-badge--bold kt-font-success"
+											id="cardUserInitial"></span>
+									</div>
+									<div class="kt-user-card__name" id="cardUserName"></div>
+								</div>
+								<!--end: Head -->
+
+								<!--begin: Navigation -->
+								<div class="kt-notification">
+									<div class="kt-notification__custom kt-space-between">
+										<a href="javascript:void(0)" id="btnSignOut"
+											class="btn btn-label btn-label-brand btn-sm btn-bold">Sign
+											Out</a>
+									</div>
+								</div>
+								<!--end: Navigation -->
+							</div>
+							<!--end: User bar -->
+						</div>
+						<!-- end:: Header Topbar -->
+					</div>
+				</div>
+				<!-- end:: Header -->
+				<div
+					class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor"
+					id="kt_content" layout:fragment="custom-content"></div>
+
+				<!-- begin:: Footer -->
+				<div
+					class="kt-footer  kt-grid__item kt-grid kt-grid--desktop kt-grid--ver-desktop"
+					id="kt_footer">
+					<div class="kt-container  kt-container--fluid ">
+						<div class="kt-footer__copyright">Dana Pensiun Bank
+							Indonesia | 2019&nbsp;&copy;&nbsp;</div>
+						<div class="kt-footer__menu"></div>
+					</div>
+				</div>
+
+				<!-- end:: Footer -->
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalRelogin" tabindex="-1" role="dialog"
+		 aria-labelledby="parameterFormDialog" aria-hidden="true">
+		<div class="modal-dialog modal-md" role="document">
+			<form>
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Session Timeout / Re-Login</h5>
+						<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="kt-form kt-form--fit">
+							<div class="form-group kt-form__group">
+								<input class="form-control kt-input" type="text" placeholder="Username" name="username" id="txtUsername" autocomplete="off" required>
+								<input type="hidden" name="returnUrl" id="returnUrl" />
+							</div>
+							<div class="form-group kt-form__group">
+								<input class="form-control kt-input kt-login__form-input--last" type="password" id="txtPassword" placeholder="Password" name="password" required>
+								<input class="form-control kt-input kt-login__form-input--last" type="hidden" id="txtFromPage" name="fromPage" value="true">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary btn-save">Login</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalNoConnection" tabindex="-1" role="dialog"
+		 aria-labelledby="parameterFormDialog" aria-hidden="true">
+		<div class="modal-dialog modal-md" role="document">
+			<form>
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Connection Failure</h5>
+						<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<p>Periksa kembali koneksi anda. Hubungi IT jika dalam waktu lama koneksi belum tersambung.</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- end:: Page -->
+
+	<!-- begin::Scrolltop -->
+	<div id="kt_scrolltop" class="kt-scrolltop">
+		<i class="fa fa-arrow-up"></i>
+	</div>
+
+	<!-- end::Scrolltop -->
+
+	<!-- begin::Global Config(global config for global JS sciprts) -->
+	<script>
+		var KTAppOptions = {
+			"colors" : {
+				"state" : {
+					"brand" : "#5d78ff",
+					"dark" : "#282a3c",
+					"light" : "#ffffff",
+					"primary" : "#5867dd",
+					"success" : "#34bfa3",
+					"info" : "#36a3f7",
+					"warning" : "#ffb822",
+					"danger" : "#fd3995"
+				},
+				"base" : {
+					"label" : [ "#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466" ],
+					"shape" : [ "#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a" ]
+				}
+			}
+		};
+	</script>
+
+	<!-- end::Global Config -->
+	<!--begin::Base Scripts -->
+	<script type="text/javascript"
+		th:src="@{/metronic/plugins/global/plugins.bundle.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/metronic/js/scripts.bundle.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/metronic/plugins/custom/fullcalendar/fullcalendar.bundle.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/js_plugin/jquery.spring-friendly.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/js_plugin/jquery.validation-tooltip.min.js}"></script>
+	<script>
+		/*<![CDATA[*/
+
+		var _userLoggedIn = '[[${T(id.co.dapenbi.core.util.SecurityUtil).getUsername()}]]';
+		var _baseUrl = '[[${T(id.co.dapenbi.core.util.HttpRequestUtil).getBaseUrl()}]]';
+
+		/*]]>*/
+	</script>
+	<script type="text/javascript" th:src="@{/custom_js/config.js}"></script>
+	<script type="text/javascript" th:src="@{/custom_js/common.js}"></script>
+	<script type="text/javascript" th:src="@{/custom_js/element.js}"></script>
+	<script type="text/javascript" th:src="@{/custom_js/template.js}"></script>
+	<script type="text/javascript" th:src="@{/custom_js/ptr_common.js}"></script>
+	<script type="text/javascript" th:src="@{/js_plugin/moment.min.js}"></script>
+	<section layout:fragment="custom-script"></section>
+</body>
+
+<!-- end::Body -->
+</html>
